@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<design>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col colour='goldenrod'/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='goldenrod'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col/>
+    </row>
+    <row>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col colour='black'/>
+        <col colour='black'/>
+    </row>
+    <row>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+    </row>
+    <row>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='goldenrod'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col colour='black'/>
+        <col colour='black'/>
+    </row>
+    <row>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+    </row>
+    <row>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col colour='black'/>
+        <col colour='black'/>
+    </row>
+    <row>
+        <col/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='goldenrod'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col colour='black'/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col colour='goldenrod'/>
+        <col colour='goldenrod'/>
+        <col colour='goldenrod'/>
+        <col colour='black'/>
+        <col colour='goldenrod'/>
+        <col colour='goldenrod'/>
+        <col colour='goldenrod'/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col/>
+        <col/>
+        <col/>
+        <col colour='black'/>
+        <col colour='black'/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+    </row>
+</design>

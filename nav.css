@@ -1,0 +1,13 @@
+img.monogram {
+    height: 155px;
+}
+
+ul.navigation {
+    padding: 0;
+}
+
+ul.navigation li {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+}

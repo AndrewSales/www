@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<!DOCTYPE book [
+    <!ENTITY comp "Andrew Sales Digital Publishing">
+    <!ENTITY email "<email>andrew (at) andrewsales (dot) com</email>">
+]>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <info>
+        <title>&comp; Limited</title>
+        <author>
+            <orgname>&comp; Limited</orgname>
+            <address> <street>Castle House, Castle Hill Avenue</street> <city>Folkestone</city>
+                <postcode>CT20 2TQ</postcode> <otheraddr>Kent</otheraddr>
+                <country>United Kingdom</country> <otheraddr role="companyNumber"
+                >07885769</otheraddr> <otheraddr role="VATNumber">128 1436 27</otheraddr>
+            </address>
+            &email;
+        </author>
+        <cover>
+            <mediaobject>
+                <imageobject role="monogram">
+                    <imagedata fileref="monogram.svg"/>
+                </imageobject>
+                <textobject>
+                    <para>Author's monogram</para>
+                </textobject>
+            </mediaobject>
+        </cover>
+    </info>
+    <chapter xml:id="index" label="Home">
+        <title>&comp;</title>
+        <para>is a consultancy based in the UK, specializing in XML and related technologies.</para>
+    </chapter>
+    <chapter xml:id="about" label="About">
+        <title>About</title>
+        <para>Andrew is principal consultant and owner of the company.</para>
+        <section>
+            <title>Career</title>
+            <para>Andrew began his working life in publishing in 1999, as desktop publishing operator at a translation agency, laying out multi-lingual manuals for such varied appliances as lawnmowers, forklift trucks and production-line biscuit ovens.</para>
+            <para>Much of the work was repetitious manual labour. FrameMaker+SGML was only spoken of with an air of mystery; there had to be a better way&#x2026;</para>
+            <para>In 2000, he joined a digital publishing consultancy whose clients comprised both STEM and non-traditional publishers.<footnote>
+                <para>Including legislatures; the timber industry; standards bodies.</para>
+                </footnote> He started out writing SGML DTDs and Python programs, progressing to on-site consultancy and writing bids and proposals. He designed publishing workflows, with a focus on automation and data quality, learning Java and XSLT along the way. He was lead developer of the company's validation product, XMLProbe.<sidebar>
+                <para>XMLProbe was open-sourced as Probatron, an implementation of ISO Schematron. It is now archived at <link
+                    xlink:href="https://code.google.com/archive/p/probatron/"
+                    >Google Code</link>.</para>
+                </sidebar> He joined the board of directors, becoming responsible for product development.</para>
+            <para>After a spell in technical publishing at an automotive aftermarket publisher, he founded his own company and worked as a freelancer, with clients including <link
+                xlink:href="https://www.lexisnexis.co.uk/">LexisNexis UK</link> and <link
+                xlink:href="https://www.springernature.com/gp"
+                >Nature Publishing Group</link>.</para>
+            <para>Since 2016, he has worked for <link xlink:href="https://www.bloomsbury.com/uk/"
+                >Bloomsbury Publishing Group plc</link>, where he leads a team focused on content architecture for academic publishing digital products.</para>
+        </section>
+        <section>
+            <title>Standards work</title>
+            <para>Andrew is a member in an individual capacity of British Standards committee <link
+                xlink:href="https://standardsdevelopment.bsigroup.com/committees/50053445"
+                >IST/41</link> (Document description and processing language), which represents the UK at meetings of ISO/IEC JTC 1/SC 34.<footnote>
+                <para>Which committee oversees standards including RELAX NG, Schematron, OOXML and EPUB.</para>
+                </footnote></para>
+            <para>He was appointed Project Editor for ISO/IEC 19757-3 (Schematron) in 2016, and maintains the text of that international standard.</para>
+            <para>He is also a member of the W3C Community Group developing <link
+                xlink:href="http://www.schematron-quickfix.com/">Schematron Quick Fix</link>.</para>
+        </section>
+        <section>
+            <title>Conferences</title>
+            <para>Andrew has been a keen conference and SIG contributor since the days of SGML UK and XML Europe.</para>
+            <para>He has attended <link xlink:href="https://www.balisage.net/"
+                >Balisage</link> as well as <link xlink:href="https://xmllondon.com/"
+                >XML London</link> and <link xlink:href="https://www.xmlprague.cz/"
+                >XML Prague</link> (for both of which he has been a member of the peer-reviewing programme committee).</para>
+            <para>Together with Tony Graham, he has organized the annual Schematron Users Meetup at XML Prague since 2017.</para>
+            <para>He is a founder member and organizer of <link xlink:href="https://markupuk.org/"
+                >Markup UK</link>, a conference about XML and other markup technologies.</para>
+        </section>
+        <section xml:id="misc">
+            <title>Miscellaneous</title>
+            <para>Andrew is not a technologist by education, but a modern languages graduate. He owns too many cameras, although he <link
+                xlink:href="https://www.flickr.com/photos/29271559@N02/"
+                >tries to put them to good use</link>.</para>
+            <section xml:id="logo">
+                <title>About the logo</title>
+                <para>The <link xlink:href="monogram.svg"
+                    >monogram logo</link> is taken from a cross-stitch embroidered finger plate designed and made by his great aunt Edith (1903-87), who taught art and needlework at state schools throughout her career.</para>
+                <para>It is rendered (statically) to SVG, from a custom XML document describing the design, using XSLT.</para>
+            </section>
+        </section>
+    </chapter>
+    <chapter xml:id="resources" label="Resources">
+        <title>Resources</title>
+        <section>
+            <title>Schematron</title>
+            <itemizedlist>
+                <listitem>
+                    <para><link xlink:href="https://www.schematronist.org/mailman/listinfo/schematron_schematronist.org">Schematron Mailing List</link></para>
+                </listitem>
+                <listitem>
+                    <para><link xlink:href="https://www.linkedin.com/groups/12094836/">Schematron LinkedIn Group</link></para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section>
+            <title>Tools</title>
+            <variablelist>
+                <varlistentry>
+                    <term><link xlink:href="https://github.com/AndrewSales/dtd2xml"
+                        >dtd2xml</link></term>
+                    <listitem>
+                        <para>Generates an XML representation of an XML 1.0 DTD. Useful for analyzing, normalizing or documenting a DTD.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><link xlink:href="https://github.com/AndrewSales/indenter"
+                        >indenter</link></term>
+                    <listitem>
+                        <para>An indentation tool for XML documents, written in Python.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><link xlink:href="https://github.com/AndrewSales/schematron4word"
+                        >schematron4word</link></term>
+                    <listitem>
+                        <para>Schematron validation for office documents.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><link xlink:href="https://github.com/AndrewSales/schematron4word"
+                        >schematron-diff</link></term>
+                    <listitem>
+                        <para>A diffing tool that uses an automatically-generated Schematron schema to produce a delta in SVRL format.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist>
+        </section>
+        <section>
+            <title>Papers</title>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis>A journey from document to data</emphasis>, XML London 2017, <link
+                        xlink:href="http://dx.doi.org/10.14337/XMLLondon16.Sales01"
+                        >http://dx.doi.org/10.14337/XMLLondon16.Sales01</link></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis>Validating office documents in the publishing production workflow</emphasis>, XML Prague 2016, <link
+                        xlink:href="http://archive.xmlprague.cz/2016/files/xmlprague-2016-proceedings.pdf"
+                        >http://archive.xmlprague.cz/2016/files/xmlprague-2016-proceedings.pdf</link></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis>The application of Schematron schemas to word-processing documents</emphasis>, XML London 2015, <link
+                        xlink:href="http://dx.doi.org/10.14337/XMLLondon15.Sales01"
+                        >http://dx.doi.org/10.14337/XMLLondon15.Sales01</link> </para>
+                </listitem>
+                <listitem>
+                    <para><emphasis>High-performance XML: theory and practice</emphasis> (with Alex Brown), XML Prague 2009, <link
+                        xlink:href="https://archive.xmlprague.cz/2009/presentations/XMLPrague_2009_proceedings.pdf"
+                        >https://archive.xmlprague.cz/2009/presentations/XMLPrague_2009_proceedings.pdf</link></para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section>
+            <title>Articles</title>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis>HTML &amp; XHTML: The Definitive Guide</emphasis> (book review), International SGML Users Group, 2002, <link
+                        xlink:href="xhtml-review.pdf">PDF</link></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis>XPath and XPointer</emphasis> (book review), International SGML Users Group, 2002, <link
+                        xlink:href="xpath-xpointer-review.pdf">PDF</link></para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </chapter>
+    <chapter xml:id="contact" label="Contact">
+        <title>Contact</title>
+        <para>Please feel free to contact me via &email;, <link
+            xlink:href="https://www.linkedin.com/in/andrew-sales-1870401/">LinkedIn</link> or <link
+            xlink:href="https://twitter.com/ASDigPub">Twitter</link>.</para>
+    </chapter>
+    <chapter xml:id="imprint" label="Imprint">
+        <title>Imprint</title>
+        <section>
+            <title>Copyright statement</title>
+            <para>This website and its contents<footnote><para>Built from <link xlink:href="https://docbook.org/">DocBook</link> 5.0 source XML using XSLT and styled with a lightly customized version of <link xlink:href="https://github.com/edwardtufte/tufte-css">tufte-css</link>.</para></footnote> are copyright &#x00A9; <date role="copyright"
+                /> &comp; Ltd.</para>
+        </section>
+        <section role="footer">
+            <title>Company details</title>
+            <para>&comp; Ltd is a company registered in England and Wales</para>
+        </section>
+    </chapter>
+</book>
