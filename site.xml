@@ -7,14 +7,9 @@
 ]>
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <info>
-        <title>&comp; Limited</title>
+        <title>&comp;</title>
         <author>
-            <orgname>&comp; Limited</orgname>
-            <address> <street>Castle House, Castle Hill Avenue</street> <city>Folkestone</city>
-                <postcode>CT20 2TQ</postcode> <otheraddr>Kent</otheraddr>
-                <country>United Kingdom</country> <otheraddr role="companyNumber"
-                >07885769</otheraddr> <otheraddr role="VATNumber">128 1436 27</otheraddr>
-            </address>
+            <orgname>&comp;</orgname>
             &email;
         </author>
         <cover>
@@ -34,7 +29,7 @@
     </chapter>
     <chapter xml:id="about" label="About">
         <title>About</title>
-        <para>Andrew is principal consultant and owner of the company.</para>
+        <para>Andrew is principal consultant and owner.</para>
         <section>
             <title>Career</title>
             <para>Andrew began his working life in publishing in 1999, as desktop publishing operator at a translation agency, laying out multi-lingual manuals for such varied appliances as lawnmowers, forklift trucks and production-line biscuit ovens.</para>
@@ -46,7 +41,7 @@
                     xlink:href="https://code.google.com/archive/p/probatron/"
                     >Google Code</link>.</para>
                 </sidebar> He joined the board of directors, becoming responsible for product development.</para>
-            <para>After a spell in technical publishing at an automotive aftermarket publisher, he founded his own company and worked as a freelancer, with clients including <link
+            <para>After a spell in technical publishing at an automotive aftermarket publisher, he founded his own consultancy and worked as a freelancer, with clients including <link
                 xlink:href="https://www.lexisnexis.co.uk/">LexisNexis UK</link> and <link
                 xlink:href="https://www.springernature.com/gp"
                 >Nature Publishing Group</link>.</para>
@@ -184,11 +179,7 @@
         <section>
             <title>Copyright statement</title>
             <para>This website and its contents<footnote><para>Built from <link xlink:href="https://docbook.org/">DocBook</link> 5.0 source XML using XSLT and styled with a lightly customized version of <link xlink:href="https://github.com/edwardtufte/tufte-css">tufte-css</link>.</para></footnote> are copyright &#x00A9; <date role="copyright"
-                /> &comp; Ltd.</para>
-        </section>
-        <section role="footer">
-            <title>Company details</title>
-            <para>&comp; Ltd is a company registered in England and Wales</para>
+                /> &comp;</para>
         </section>
     </chapter>
 </book>

@@ -25,7 +25,7 @@
         <xsl:result-document href="{@xml:id}.html" method="html">
             <html>
                 <head>
-                    <title>Andrew Sales Digital Publishing Limited</title>
+                    <title><xsl:value-of select="/book/info/title"/></title>
                     <link rel="stylesheet" href="tufte.css"/>
                     <link rel="stylesheet" href="custom.css"/>
                 </head>
