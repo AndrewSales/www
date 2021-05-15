@@ -121,7 +121,7 @@
                     </listitem>
                 </varlistentry>
                 <varlistentry>
-                    <term><link xlink:href="https://github.com/AndrewSales/schematron4word"
+                    <term><link xlink:href="https://github.com/AndrewSales/schematron-diff"
                         >schematron-diff</link></term>
                     <listitem>
                         <para>A diffing tool that uses an automatically-generated Schematron schema to produce a delta in SVRL format.</para>
