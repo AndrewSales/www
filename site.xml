@@ -100,6 +100,13 @@
             <title>Tools</title>
             <variablelist>
                 <varlistentry>
+                    <term><link xlink:href="https://github.com/AndrewSales/doctype-tool"
+                        >doctype-tool</link></term>
+                    <listitem>
+                        <para>Reports and amends XML 1.0 <code>DOCTYPE</code> declarations.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term><link xlink:href="https://github.com/AndrewSales/dtd2xml"
                         >dtd2xml</link></term>
                     <listitem>
