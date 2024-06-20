@@ -78,8 +78,8 @@
             <section xml:id="logo">
                 <title>About the logo</title>
                 <para>The <link xlink:href="monogram.svg"
-                    >monogram logo</link> is taken from a cross-stitch embroidered finger plate designed and made by his great aunt Edith (1903-87), who taught art and needlework at state schools throughout her career.</para>
-                <para>It is rendered (statically) to SVG, from a custom XML document describing the design, using XSLT.</para>
+                    >monogram logo</link> is taken from a cross-stitch embroidered finger plate designed and made by his great-aunt Edith (1903-87), who taught art and needlework at state schools throughout her career.</para>
+                <para>It is <link xlink:href="monogram.svg">rendered (statically) to SVG</link>, from a <link xlink:href="monogram.xml">custom XML document</link> describing the design, using <link xlink:href="design-to-svg.xsl">this XSLT</link>.</para>
             </section>
         </section>
     </chapter>
