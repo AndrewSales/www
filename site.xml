@@ -55,7 +55,7 @@
                 >IST/41</link> (Document description and processing language), which represents the UK at meetings of ISO/IEC JTC 1/SC 34.<footnote>
                 <para>Which committee oversees standards including RELAX NG, Schematron, OOXML and EPUB.</para>
                 </footnote></para>
-            <para>He was appointed Project Editor for ISO/IEC 19757-3 (Schematron) in 2016, and maintains the text of that international standard.</para>
+            <para>He was appointed Project Editor for ISO/IEC 19757-3 (Schematron) in 2016, and maintains the text of that international standard. Since late 2022 he has convened Working Group 10, which is tasked with producing its next revision.</para>
             <para>He is also a member of the W3C Community Group developing <link
                 xlink:href="http://www.schematron-quickfix.com/">Schematron Quick Fix</link>.</para>
         </section>
@@ -134,11 +134,21 @@
                         <para>A diffing tool that uses an automatically-generated Schematron schema to produce a delta in SVRL format.</para>
                     </listitem>
                 </varlistentry>
+                <varlistentry>
+                    <term><link xlink:href="https://github.com/AndrewSales/XQS"
+                        >XQS</link></term>
+                    <listitem>
+                        <para>An implementation of ISO Schematron, written in pure XQuery.</para>
+                    </listitem>
+                </varlistentry>
             </variablelist>
         </section>
         <section>
             <title>Papers</title>
             <itemizedlist>
+                <listitem>
+                    <para><emphasis><link xlink:href="https://markupuk.org/2023/webhelp/index.html#ar11.html">XQS: A Native XQuery Schematron Implementation</link></emphasis>, Markup UK 2023.</para>
+                </listitem>
                 <listitem>
                     <para><emphasis>A journey from document to data</emphasis>, XML London 2017, <link
                         xlink:href="http://dx.doi.org/10.14337/XMLLondon16.Sales01"
