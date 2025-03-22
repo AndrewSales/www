@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.1">
+    <title>What's New In Schematron 4</title><!-- TODO: SVRL equivalents? -->
+    <section>
+        <title>New attributes</title>
+        <section>
+            <title>Attribute <tag class="attribute">as</tag></title>
+            <itemizedlist>
+                <title>Element context(s)</title>
+                <listitem>
+                    <para><tag class="element">let</tag></para>
+                </listitem>
+            </itemizedlist>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and expresses the datatype of a variable declared by element <tag class="element">let</tag>.</para>
+            <blockquote>
+                <title>Clause 5.4.7 (<literal>let</literal> element)</title>
+                <para>The optional <literal>as</literal> attribute is the datatype of the variable. The query language binding shall determine whether the <literal>as</literal> attribute is supported and how it is processed.</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting>let =
+    element let {
+        attribute name { nameValue },
+        <phrase role="highlight">attribute as { text }?</phrase>,
+        (attribute value { string }
+         | foreign-element+)
+    }</programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/1">Typed variables</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example>
+                    <title><literal>as</literal> attribute</title>
+                    <para>TODO</para>
+                </example>
+            </section>
+        </section>
+        <section>
+            <title>Attribute <tag class="attribute">from</tag></title>
+            <itemizedlist>
+                <title>Element context(s)</title>
+                <listitem>
+                    <para><tag class="element">phase</tag></para>
+                </listitem>
+            </itemizedlist>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and activates the phase when its expression matches.</para>
+            <blockquote>
+                <title>Clause 5.4.13 (<literal>phase</literal> element)</title>
+                <para>The optional <literal>from</literal> attribute [...] can be used to restrict validation to a subset of a document.</para>
+            </blockquote>            
+            <blockquote>
+                <title>Clause 5.5.7 (<literal>from</literal> attribute)</title>
+                <para>The <literal>from</literal> attribute contains an expression which restricts the evaluation of patterns in a phase to the subset of the document it selects.</para>
+                <para>The expression shall be evaluated in the context of the instance document root. The results become the context against which rule <literal>context</literal> expressions are evaluated. Variables evaluated in the context of the instance document root are not influenced by the presence of <literal>from</literal> and so are evaluated and scoped as usual.</para>
+                <para>This behaviour shall not apply to subordinate documents, that is those selected by the <literal>documents</literal> attribute [...].</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting>phase =
+     element phase {
+         attribute id { xsd:ID },
+         <phrase role="highlight">attribute from { text }?</phrase>,
+         rich,
+         (foreign &amp; inclusion* &amp; (p*, let*, active*))
+     }</programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/72">Enhancement for sch:phase - @start-at</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example>
+                    <title><literal>from</literal> attribute</title>
+                    <para>TODO</para>
+                </example>
+            </section>
+        </section>
+        <section>
+            <title>Attribute <tag class="attribute">schematronEdition</tag></title>
+            <itemizedlist>
+                <title>Element context(s)</title>
+                <listitem>
+                    <para><tag class="element">schema</tag></para>
+                </listitem>
+            </itemizedlist>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and states the version of Schematron (i.e. which edition of the standard) the schema conforms to.</para>
+            <blockquote>
+                <title>Clause 5.5.15 (<literal>schematronEdition</literal> attribute)</title>
+                <para>The value of this attribute where specified shall be <literal>2025</literal>.</para>
+                <para>Schemas should specify this attribute.</para>
+                <para>Implementations shall report the value or the absence of this attribute at user option.</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting>element schema {
+        attribute id { xsd:ID }?,
+        rich,
+        attribute schemaVersion { non-empty-string }?,
+        <phrase role="highlight">attribute schematronEdition { non-empty-string }?</phrase>,
+        attribute defaultPhase { xsd:IDREF }?,
+        attribute queryBinding { non-empty-string }?,
+        (foreign
+         &amp; (inclusion | extends)*
+         &amp; (title?, ns*, p*, param*, let*, phase*, abstract-rules*, (rule-set|pattern)+, p*, diagnostics?, properties?))
+    }</programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/42">Proposal for proper language versioning system</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example>
+                    <title><literal>schematronEdition</literal> attribute</title>
+                    <para>TODO</para>
+                </example>
+            </section>
+        </section>        
+        <section>
+            <title>Attribute <tag class="attribute">severity</tag></title>
+            <itemizedlist>
+                <title>Element context(s)</title>
+                <listitem>
+                    <para><tag class="element">assert</tag></para>
+                </listitem>
+                <listitem>
+                    <para><tag class="element">report</tag></para>
+                </listitem>
+            </itemizedlist>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and expresses the relative importance of an assertion.</para>
+            <blockquote>
+                <title>Clause 5.5.16 (<literal>severity</literal> attribute)</title>
+                <para>The following values are reserved for use and without further definition: <literal>fatal</literal>, <literal>error</literal>, <literal>warning</literal>, <literal>info</literal>.</para>
+                <para>If the value of a <literal>severity</literal> attribute given in a schema is a variable reference, its value shall be dynamically evaluated. This mechanism is provided to enable the severity value to vary, for example according to the selected phase and its in-scope variables.</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting><phrase role="highlight">severity = attribute severity{ text }?</phrase></programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/58">Add attribute named e.g. 'severity' to schematron with well defined semantics for reporting severity levels</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example>
+                    <title><literal>severity</literal> attribute</title>
+                    <para>TODO: assert</para>
+                    <para>TODO: report</para>
+                    <para>TODO: as variable reference</para>
+                    <para>TODO: as phase variable reference</para>
+                </example>
+            </section>
+        </section>
+        <!-- TODO: @visit-each -->
+        <section>
+            <title>Attribute <tag class="attribute">when</tag></title>
+            <itemizedlist>
+                <title>Element context(s)</title>
+                <listitem>
+                    <para><tag class="element">phase</tag></para>
+                </listitem>
+            </itemizedlist>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and .</para>
+            <blockquote>
+                <title>Clause 5.4.13 (<literal>phase</literal> element)</title>
+                <para>The string <literal>#ANY</literal> denotes that the active phase is selected using the method given in [Clause 5.5.22] and if no active phase is selected, then all patterns are active.</para>
+            </blockquote>
+            <blockquote>
+                <title>Clause 5.5.22 (<literal>when</literal> attribute)</title>
+                <para>The <literal>when</literal> attribute is an expression evaluated to a Boolean in the context of the instance document root. If the expression evaluates to <literal>true()</literal>, then its parent phase becomes active. The first such phase declared in schema document order shall be the active phase.</para>
+                <para>This behaviour shall not apply to subordinate documents, that is those selected by the documents attribute [...].</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting><phrase role="highlight">severity = attribute severity{ text }?</phrase></programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/58">Add attribute named e.g. 'severity' to schematron with well defined semantics for reporting severity levels</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example>
+                    <title><literal>severity</literal> attribute</title>
+                    <para>TODO: assert</para>
+                    <para>TODO: report</para>
+                    <para>TODO: as variable reference</para>
+                    <para>TODO: as phase variable reference</para>
+                </example>
+            </section>
+        </section>
+    </section>
+    <section>
+        <title>New elements</title>
+        <section>
+            <title>Element <tag class="element">group</tag></title>
+            <para/>
+        </section>
+        <section>
+            <title>Element <tag class="element">library</tag></title>
+            <para/>
+        </section>
+        <section>
+            <title>Element <tag class="element">rules</tag></title>
+            <para/>
+        </section>
+    </section>
+</chapter>
