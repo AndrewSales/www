@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.1">
     <title>What's New In Schematron 4</title><!-- TODO: SVRL equivalents? -->
-    <section>
+    <part>
         <title>New attributes</title>
-        <section>
-            <title>Attribute <tag class="attribute">as</tag></title>
+        <chapter>
+            <title><tag class="attribute">as</tag></title>
             <itemizedlist>
                 <title>Element context(s)</title>
                 <listitem>
@@ -15,7 +15,7 @@
                 </listitem>
             </itemizedlist>
             <para>This attribute is <emphasis role="bold">optional</emphasis> and expresses the datatype of a variable declared by element <tag class="element">let</tag>.</para>
-            <blockquote>
+            <blockquote role='iso'>
                 <title>Clause 5.4.7 (<literal>let</literal> element)</title>
                 <para>The optional <literal>as</literal> attribute is the datatype of the variable. The query language binding shall determine whether the <literal>as</literal> attribute is supported and how it is processed.</para>
             </blockquote>
@@ -36,25 +36,29 @@
             <section>
                 <title>Sample usage</title>
                 <example>
-                    <title><literal>as</literal> attribute</title>
-                    <para>TODO</para>
+                    <title><tag class="attribute">as</tag> attribute: <tag class="attribute">value</tag> attribute of <tag class="element">sch:let</tag></title>
+                    <programlisting language="xml"><![CDATA[<sch:let name='foo' as='xs:integer' value='12'/>]]></programlisting>
+                </example>
+                <example>
+                    <title><tag class="attribute">as</tag> attribute: element content of <tag class="element">sch:let</tag></title>
+                    <programlisting language="xml"><![CDATA[<sch:let name='foo' as='element(foo)'><foo/></sch:let>]]></programlisting>
                 </example>
             </section>
-        </section>
-        <section>
-            <title>Attribute <tag class="attribute">from</tag></title>
+        </chapter>
+        <chapter>
+            <title><tag class="attribute">from</tag></title>
             <itemizedlist>
                 <title>Element context(s)</title>
                 <listitem>
                     <para><tag class="element">phase</tag></para>
                 </listitem>
             </itemizedlist>
-            <para>This attribute is <emphasis role="bold">optional</emphasis> and activates the phase when its expression matches.</para>
-            <blockquote>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and restricts evaluation of the patterns the phase contains to the subset of the document its expression matches.</para>
+            <blockquote role='iso'>
                 <title>Clause 5.4.13 (<literal>phase</literal> element)</title>
                 <para>The optional <literal>from</literal> attribute [...] can be used to restrict validation to a subset of a document.</para>
             </blockquote>            
-            <blockquote>
+            <blockquote role='iso'>
                 <title>Clause 5.5.7 (<literal>from</literal> attribute)</title>
                 <para>The <literal>from</literal> attribute contains an expression which restricts the evaluation of patterns in a phase to the subset of the document it selects.</para>
                 <para>The expression shall be evaluated in the context of the instance document root. The results become the context against which rule <literal>context</literal> expressions are evaluated. Variables evaluated in the context of the instance document root are not influenced by the presence of <literal>from</literal> and so are evaluated and scoped as usual.</para>
@@ -66,6 +70,7 @@
      element phase {
          attribute id { xsd:ID },
          <phrase role="highlight">attribute from { text }?</phrase>,
+         attribute when { pathValue }?,
          rich,
          (foreign &amp; inclusion* &amp; (p*, let*, active*))
      }</programlisting>
@@ -76,14 +81,49 @@
             </section>
             <section>
                 <title>Sample usage</title>
-                <example>
+                <example xml:id="from-att">
                     <title><literal>from</literal> attribute</title>
-                    <para>TODO</para>
+                    <para>Given this instance document:</para>
+                    <programlisting><![CDATA[<foo>
+    <blort wibble='1'/>
+    <bar>]]><phrase role='highlight'><![CDATA[<blort wibble='2'/><blort wibble='3'/>]]></phrase><![CDATA[</bar>
+</foo>]]></programlisting>
+                    <para>and this schema:</para>
+                    <programlisting><![CDATA[<sch:schema defaultPhase='wibble'>
+      <sch:phase id='wibble' from='/foo/bar'>
+        <sch:active pattern='wibble'/>
+      </sch:phase>
+      <sch:pattern id='wibble'>
+        <sch:rule context='.//blort[@wibble]'>
+          <sch:report test='@wibble'><sch:value-of select='@wibble'/></sch:report>
+        </sch:rule>
+      </sch:pattern>
+    </sch:schema>]]></programlisting>
+                    <para>only the two instances of <tag class="element">wibble</tag> (highlighted, at XPath <literal>/foo/bar/blort</literal>) will be reported, because the <tag class="attribute">from</tag> attribute constrains the evaluation context to the XPath given (<literal>/foo/bar</literal>).</para>
+                </example>
+                <example xml:id="from-att-empty-sequence">
+                    <title><literal>from</literal> attribute: evaluation returns the empty sequence</title>
+                    <para>Given the same instance document as <link linkend="from-att">above</link> and this schema:</para>
+                    <programlisting><![CDATA[<sch:schema defaultPhase='wibble'>
+      <sch:phase id='wibble' ]]><phrase role="highlight">from='/no/such/path'</phrase><![CDATA[>
+        <sch:active pattern='wibble'/>
+      </sch:phase>
+      <sch:pattern id='wibble'>
+        <sch:rule context='.//blort[@wibble]'>
+          <sch:report test='@wibble'><sch:value-of select='@wibble'/></sch:report>
+        </sch:rule>
+      </sch:pattern>
+    </sch:schema>]]></programlisting>
+                    <para>nothing is returned because evaluating <tag class="attribute">from</tag> (highlighted) returns the empty sequence. The rule will consequently not fire and none of its assertions will be evaluated.</para>
                 </example>
             </section>
-        </section>
-        <section>
-            <title>Attribute <tag class="attribute">schematronEdition</tag></title>
+            <section>
+                <title>Commentary</title>
+                <para>The implication of the phrase "The results become the context against which rule <literal>context</literal> expressions are evaluated" is that if the results are the empty sequence, there is nothing to validate and so the active patterns belonging to the phase are not evaluated (see <xref linkend="from-att-empty-sequence"/>).</para>
+            </section>
+        </chapter>
+        <chapter>
+            <title><tag class="attribute">schematronEdition</tag></title>
             <itemizedlist>
                 <title>Element context(s)</title>
                 <listitem>
@@ -91,7 +131,7 @@
                 </listitem>
             </itemizedlist>
             <para>This attribute is <emphasis role="bold">optional</emphasis> and states the version of Schematron (i.e. which edition of the standard) the schema conforms to.</para>
-            <blockquote>
+            <blockquote role='iso'>
                 <title>Clause 5.5.15 (<literal>schematronEdition</literal> attribute)</title>
                 <para>The value of this attribute where specified shall be <literal>2025</literal>.</para>
                 <para>Schemas should specify this attribute.</para>
@@ -119,12 +159,18 @@
                 <title>Sample usage</title>
                 <example>
                     <title><literal>schematronEdition</literal> attribute</title>
-                    <para>TODO</para>
+                    <programlisting language="xml"><![CDATA[<sch:schema ]]><phrase role="highlight">schematronEdition='2025'</phrase><![CDATA[>
+      <sch:pattern>
+        <sch:rule context='*'>
+          <sch:report test='true()'><sch:name/></sch:report>
+        </sch:rule>
+      </sch:pattern>
+    </sch:schema>]]></programlisting>
                 </example>
             </section>
-        </section>        
-        <section>
-            <title>Attribute <tag class="attribute">severity</tag></title>
+        </chapter>        
+        <chapter>
+            <title><tag class="attribute">severity</tag></title>
             <itemizedlist>
                 <title>Element context(s)</title>
                 <listitem>
@@ -135,7 +181,7 @@
                 </listitem>
             </itemizedlist>
             <para>This attribute is <emphasis role="bold">optional</emphasis> and expresses the relative importance of an assertion.</para>
-            <blockquote>
+            <blockquote role='iso'>
                 <title>Clause 5.5.16 (<literal>severity</literal> attribute)</title>
                 <para>The following values are reserved for use and without further definition: <literal>fatal</literal>, <literal>error</literal>, <literal>warning</literal>, <literal>info</literal>.</para>
                 <para>If the value of a <literal>severity</literal> attribute given in a schema is a variable reference, its value shall be dynamically evaluated. This mechanism is provided to enable the severity value to vary, for example according to the selected phase and its in-scope variables.</para>
@@ -158,59 +204,272 @@
                     <para>TODO: as phase variable reference</para>
                 </example>
             </section>
-        </section>
-        <!-- TODO: @visit-each -->
-        <section>
-            <title>Attribute <tag class="attribute">when</tag></title>
+        </chapter>
+        <chapter>
+            <title><tag class="attribute">visit-each</tag></title>
+            <itemizedlist>
+                <title>Element context(s)</title>
+                <listitem>
+                    <para><tag class="element">rule</tag></para>
+                </listitem>
+            </itemizedlist>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and selects items matched by a <literal>rule</literal> context for further evaluation.</para>
+            <blockquote role='iso'>
+                  <title>Clause 5.5.21 (<literal>visit-each</literal> attribute)</title>
+                <para>The <literal>visit-each</literal> attribute contains an expression which selects a sequence of items for further evaluation.</para>
+                <para>The expression is evaluated against each item resulting from evaluation of the rule's context expression. If this sequence is non-empty, it becomes the context against which assertions are evaluated, in place of the rule's context. If it is empty, the rule is still considered to have fired.</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting>element rule {
+        attribute flag { flagValue }?,
+        rich,
+        linkable,
+        (foreign
+         &amp; inclusion*
+         &amp; ((attribute context { pathValue },
+               <phrase role="highlight">attribute visit-each { pathValue }?</phrase>,
+               attribute id { xsd:ID }?,
+               attribute abstract { "false" }?,
+               title?,
+               let*,
+               (assert | report | extends | p)+)))
+    }</programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/75">Checking for substrings of the node values</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example>
+                    <title><literal>visit-each</literal> attribute</title>
+                    <programlisting language="xml"><![CDATA[<sch:rule context='para' visit-each='fn:analyze-string(., "foo")'>
+  <sch:report test='fn:match'>Found matching substring "foo" at index <sch:value-of select='string-length(string-join(preceding-sibling::fn:*))+1'/> in para.</sch:report>
+</sch:rule>]]></programlisting>
+                </example>
+            </section>
+        </chapter>
+        <chapter>
+            <title><tag class="attribute">when</tag></title>
             <itemizedlist>
                 <title>Element context(s)</title>
                 <listitem>
                     <para><tag class="element">phase</tag></para>
                 </listitem>
             </itemizedlist>
-            <para>This attribute is <emphasis role="bold">optional</emphasis> and .</para>
-            <blockquote>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and activates the phase when its expression matches.</para>
+            <blockquote role='iso'>
                 <title>Clause 5.4.13 (<literal>phase</literal> element)</title>
-                <para>The string <literal>#ANY</literal> denotes that the active phase is selected using the method given in [Clause 5.5.22] and if no active phase is selected, then all patterns are active.</para>
+                <para>The string <literal>#ANY</literal> denotes that the active phase is selected using the method given in [<link xlink:href="#when-attr">Clause 5.5.22</link>] and if no active phase is selected, then all patterns are active.</para>
             </blockquote>
-            <blockquote>
+            <blockquote role='iso' xml:id="when-attr">
                 <title>Clause 5.5.22 (<literal>when</literal> attribute)</title>
                 <para>The <literal>when</literal> attribute is an expression evaluated to a Boolean in the context of the instance document root. If the expression evaluates to <literal>true()</literal>, then its parent phase becomes active. The first such phase declared in schema document order shall be the active phase.</para>
-                <para>This behaviour shall not apply to subordinate documents, that is those selected by the documents attribute [...].</para>
+                <para>This behaviour shall not apply to subordinate documents, that is those selected by the <literal>documents</literal> attribute [...].</para>
             </blockquote>
             <section>
                 <title>Declaration</title>
-                <programlisting><phrase role="highlight">severity = attribute severity{ text }?</phrase></programlisting>
+                <programlisting>phase =
+     element phase {
+         attribute id { xsd:ID },
+         attribute from { text }?,
+         <phrase role="highlight">attribute when { pathValue }?</phrase>,
+         rich,
+         (foreign &amp; inclusion* &amp; (p*, let*, active*))
+     }</programlisting>
             </section>
             <section>
                 <title>Related GitHub issue(s)</title>
-                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/58">Add attribute named e.g. 'severity' to schematron with well defined semantics for reporting severity levels</link></para>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/71">Enhancement for sch:phase - @when</link></para>
             </section>
             <section>
                 <title>Sample usage</title>
-                <example>
-                    <title><literal>severity</literal> attribute</title>
-                    <para>TODO: assert</para>
-                    <para>TODO: report</para>
-                    <para>TODO: as variable reference</para>
-                    <para>TODO: as phase variable reference</para>
+                <example xml:id="when-att">
+                    <title><literal>from</literal> attribute</title>
+                    <para>Given this instance document:</para>
+                    <programlisting><![CDATA[<foo>
+<blort wibble='1'/>
+<bar>]]><phrase role='highlight'><![CDATA[<blort wibble='2'/><blort wibble='3'/>]]></phrase><![CDATA[</bar>
+</foo>]]></programlisting>
+                    <para>and this schema:</para>
+                    <programlisting><![CDATA[<sch:schema>
+  <sch:phase id='foo' when='/foo'>
+    <sch:active pattern='wibble-1'/>
+  </sch:phase>
+  <sch:phase id='wibble' when='//@wibble'>
+    <sch:active pattern='wibble-2'/>
+  </sch:phase>
+  <sch:phase id='bar' when='/foo/bar'>
+    <sch:active pattern='wibble-3'/>
+  </sch:phase>
+  <sch:pattern id='wibble-1'>
+    <sch:rule context='//blort[@wibble]'>
+      <sch:report test='@wibble'><sch:value-of select='@wibble'/></sch:report>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern id='wibble-2'>
+    <sch:rule context='//blort[@wibble]'>
+      <sch:report test='@wibble'><sch:value-of select='@wibble/..'/></sch:report>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern id='wibble-3'>
+    <sch:rule context='//blort[@wibble]'>
+      <sch:assert test='normalize-space(@wibble)'>value must not be empty</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
+                    <para>all instances of the <tag class="attribute">when</tag> attribute match when evaluated against the document instance, but only the <emphasis>first</emphasis> matching phase in document order (<literal>wibble-1</literal>) is selected.</para>
+                    <note><para>This result is obtained only if the implementation is invoked using <literal>#ANY</literal> to specify that the phase should be dynamically selected by evaluating <tag class="attribute">when</tag> attributes.</para>
+                    <para>If no phase is selected with this schema, the behaviour matches that of specifying <literal>#ALL</literal> instead: all patterns become active and are therefore evaluated.</para></note>
                 </example>
             </section>
-        </section>
-    </section>
-    <section>
+            <section>
+                <title>Commentary</title>
+                <para>The introduction of this attribute entails the new string <literal>#ANY</literal> to specify that <tag class="attribute">when</tag> should be used to determine the active phase.</para>
+                <para>Like <literal>#ALL</literal> and <literal>#DEFAULT</literal>, <literal>#ANY</literal> is not to be used as a phase name in a schema, but instead to invoke or configure validation, for example when passed as a parameter to an implementation at the command line.</para>
+            </section>
+        </chapter>
+    </part>
+    <part>
         <title>New elements</title>
-        <section>
+        <chapter>
             <title>Element <tag class="element">group</tag></title>
-            <para/>
-        </section>
-        <section>
+            <para>This element has the same content model as element <tag class="element">pattern</tag>. Patterns and groups may be combined in a schema.</para>
+            <blockquote role="iso" xml:id="group-elem">
+                <title>Clause 5.4.5 (<literal>group</literal> element)</title>
+                <para>The group element has the same structure and semantics as element pattern[...], except that the if-then-else behaviour of evaluating rules within a pattern shall not apply (see <link linkend="order-side-effects">6.6</link>).</para>
+            </blockquote>
+            <blockquote role="iso" xml:id="order-side-effects">
+                <title>Clause 6.6 Order and side-effects</title>
+                <para>A rule element acts as an if-then-else statement within each pattern. In the context of a group element (<link linkend="group-elem">5.4.5</link>), this behaviour shall not apply and a match shall be attempted instead against all the rule contexts it contains.</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting>element schema {
+        attribute id { xsd:ID }?,
+        rich,
+        attribute schemaVersion { non-empty-string }?,
+        attribute schematronEdition { non-empty-string }?,
+        attribute defaultPhase { xsd:IDREF }?,
+        attribute queryBinding { non-empty-string }?,
+        (foreign
+         &amp; (inclusion | extends)*
+         &amp; (title?, ns*, p*, param*, let*, phase*, abstract-rules*, (<phrase role="highlight">rule-set</phrase>|pattern)+, p*, diagnostics?, properties?))
+    }</programlisting>
+                <programlisting>element library {
+        attribute id { xsd:ID }?,
+        rich,
+        (foreign
+         &amp; (inclusion | extends)*
+         &amp; (title?, p*, param*, let*, abstract-rules*, (<phrase role="highlight">rule-set</phrase>|pattern)*, p*, diagnostics?, properties?))
+    }</programlisting>
+                <programlisting>rule-set = 
+    element <phrase role="highlight">group</phrase> {
+        rule-set-or-pattern    
+    }</programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/25">Option to turn off if-then-else behaviour within patterns</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example xml:id="group-elem-example">
+                    <title><literal>group</literal> element</title>
+                    <para>Given this instance document:</para>
+                    <programlisting><![CDATA[<foo/>]]></programlisting>
+                    <para>and this schema:</para>
+                    <programlisting><![CDATA[<sch:schema>
+      <sch:group>
+        <sch:rule context='*'>
+          <sch:assert test='name() eq "bar"'>root element is <sch:name/></sch:assert>
+        </sch:rule>
+        <sch:rule context='foo'>
+          <sch:report test='.'>should reach here</sch:report>
+        </sch:rule>
+      </sch:group>
+    </sch:schema>]]></programlisting>
+                    <para><emphasis>both</emphasis> rules will fire and their assertions will be evaluated, because within the context of a <tag class="element">group</tag>, all rules are evaluated. Contrast this with <tag class="element">pattern</tag>: in this instance, only the <emphasis>first</emphasis> rule would fire (if a child of <tag class="element">pattern</tag>), because the context has already been matched when the second rule's context is evaluated.</para>
+                </example>
+            </section>
+        </chapter>
+        <chapter>
             <title>Element <tag class="element">library</tag></title>
-            <para/>
-        </section>
-        <section>
+            <itemizedlist>
+                <title>Element context(s)</title>
+                <listitem>
+                    <para><tag class="element">library</tag> is a root element</para>
+                </listitem>
+            </itemizedlist>
+            <para>This element is a convenience for building modular schemas, featuring a pared-down version of the <tag class="element">schema</tag>'s content model.</para>
+            <blockquote role="iso" xml:id="library-elem">
+                <title>Clause 5.4.8 (<literal>library</literal> element)</title>
+                <para>The library element is an allowed root element containing external declarations, including abstract rules [...] and patterns [...].The contents of this element can be included in a schema by using <tag class="element">extends</tag>.</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting>element library {
+        attribute id { xsd:ID }?,
+        rich,
+        (foreign
+         &amp; (inclusion | extends)*
+         &amp; (title?, p*, param*, let*, abstract-rules*, (rule-set|pattern)*, p*, diagnostics?, properties?))
+    }</programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/39">A library system for abstract patterns and abstract rule-sets</link></para>
+            </section>
+        </chapter>
+        <chapter>
             <title>Element <tag class="element">rules</tag></title>
-            <para/>
-        </section>
-    </section>
-</chapter>
+            <itemizedlist>
+                <title>Element context(s)</title>
+                <listitem>
+                    <para><tag class="element">library</tag></para>
+                </listitem>
+                <listitem>
+                    <para><tag class="element">schema</tag></para>
+                </listitem>
+            </itemizedlist>
+            <blockquote role="iso" xml:id="rules-elem">
+                <title>Clause 5.4.16 (<literal>rules</literal> element)</title>
+                <para>The rules element is a container for abstract rules, allowing their use across patterns. This element may be used as a top-level element in a schema and can also be used in a library.</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting>element schema {
+        attribute id { xsd:ID }?,
+        rich,
+        attribute schemaVersion { non-empty-string }?,
+        attribute schematronEdition { non-empty-string }?,
+        attribute defaultPhase { xsd:IDREF }?,
+        attribute queryBinding { non-empty-string }?,
+        (foreign
+         &amp; (inclusion | extends)*
+         &amp; (title?, ns*, p*, param*, let*, phase*, <phrase role="highlight">abstract-rules</phrase>*, (rule-set|pattern)+, p*, diagnostics?, properties?))
+    }</programlisting>
+                <programlisting>element library {
+        attribute id { xsd:ID }?,
+        rich,
+        (foreign
+         &amp; (inclusion | extends)*
+         &amp; (title?, p*, param*, let*, <phrase role="highlight">abstract-rules</phrase>*, (rule-set|pattern)*, p*, diagnostics?, properties?))
+    }</programlisting>
+                <programlisting>abstract-rules =
+    element <phrase role="highlight">rules</phrase> {
+        attribute id { xsd:ID }?,
+        rich,
+        title?,
+        p*,
+        abstract-rule+
+    }</programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/3">A container element for abstract Schematron rules</link></para>
+            </section>
+        </chapter>
+    </part>
+</book>
