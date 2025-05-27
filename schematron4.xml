@@ -338,11 +338,11 @@
             <para>This element has the same content model as element <tag class="element">pattern</tag>. Patterns and groups may be combined in a schema.</para>
             <blockquote role="iso" xml:id="group-elem">
                 <title>Clause 5.4.5 (<literal>group</literal> element)</title>
-                <para>The group element has the same structure and semantics as element pattern[...], except that the if-then-else behaviour of evaluating rules within a pattern shall not apply (see <link linkend="order-side-effects">6.6</link>).</para>
+                <para>The <literal>group</literal> element has the same structure and semantics as element pattern[...], except that the if-then-else behaviour of evaluating rules within a pattern shall not apply (see <link linkend="order-side-effects">6.6</link>).</para>
             </blockquote>
             <blockquote role="iso" xml:id="order-side-effects">
                 <title>Clause 6.6 Order and side-effects</title>
-                <para>A rule element acts as an if-then-else statement within each pattern. In the context of a group element (<link linkend="group-elem">5.4.5</link>), this behaviour shall not apply and a match shall be attempted instead against all the rule contexts it contains.</para>
+                <para>A <literal>rule</literal> element acts as an if-then-else statement within each pattern. In the context of a <literal>group</literal> element (<link linkend="group-elem">5.4.5</link>), this behaviour shall not apply and a match shall be attempted instead against all the rule contexts it contains.</para>
             </blockquote>
             <section>
                 <title>Declaration</title>
@@ -381,15 +381,15 @@
                     <programlisting><![CDATA[<foo/>]]></programlisting>
                     <para>and this schema:</para>
                     <programlisting><![CDATA[<sch:schema>
-      <sch:group>
-        <sch:rule context='*'>
-          <sch:assert test='name() eq "bar"'>root element is <sch:name/></sch:assert>
-        </sch:rule>
-        <sch:rule context='foo'>
-          <sch:report test='.'>should reach here</sch:report>
-        </sch:rule>
-      </sch:group>
-    </sch:schema>]]></programlisting>
+  <sch:group>
+    <sch:rule context='*'>
+      <sch:assert test='name() eq "bar"'>root element is <sch:name/></sch:assert>
+    </sch:rule>
+    <sch:rule context='foo'>
+      <sch:report test='.'>should reach here</sch:report>
+    </sch:rule>
+  </sch:group>
+</sch:schema>]]></programlisting>
                     <para><emphasis>both</emphasis> rules will fire and their assertions will be evaluated, because within the context of a <tag class="element">group</tag>, all rules are evaluated. Contrast this with <tag class="element">pattern</tag>: in this instance, only the <emphasis>first</emphasis> rule would fire (if a child of <tag class="element">pattern</tag>), because the context has already been matched when the second rule's context is evaluated.</para>
                 </example>
             </section>
@@ -402,7 +402,6 @@
                     <para><tag class="element">library</tag> is a root element</para>
                 </listitem>
             </itemizedlist>
-            <para>This element is a convenience for building modular schemas, featuring a pared-down version of the <tag class="element">schema</tag>'s content model.</para>
             <blockquote role="iso" xml:id="library-elem">
                 <title>Clause 5.4.8 (<literal>library</literal> element)</title>
                 <para>The library element is an allowed root element containing external declarations, including abstract rules [...] and patterns [...].The contents of this element can be included in a schema by using <tag class="element">extends</tag>.</para>
@@ -420,6 +419,56 @@
             <section>
                 <title>Related GitHub issue(s)</title>
                 <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/39">A library system for abstract patterns and abstract rule-sets</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example xml:id="library-elem-example">
+                    <title><literal>library</literal> element</title>
+                    <para>Given this schema:</para>
+                    <programlisting><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+  <sch:extends href=']]><phrase role='highlight'>library.sch</phrase><![CDATA['/>
+  <sch:pattern>
+    <sch:rule context="/">
+      <sch:assert test="true()">Always true</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
+                    <para>and the library imported via <tag class="element">extends</tag> from <literal>library.sch</literal> (see highlight above):</para>
+                    <programlisting><![CDATA[<library xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+    <pattern id='blort'>
+        <rule context="blort">
+            <assert test="@wibble">Element <name/> must have attribute 'wibble'</assert>
+        </rule>
+    </pattern>    
+    <pattern id='wibble'>
+        <rule context="wibble">
+            <assert test=". = $some-global">Element <name/> must have value '<value-of select="$some-global"/>'</assert>
+        </rule>
+    </pattern>    
+</library>]]></programlisting>
+                    <para>the contents of the library will be included in place of the <tag class="element">extends</tag> element, to produce the resulting schema:</para>
+                    <programlisting><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="blort">
+        <rule context="blort">
+            <assert test="@wibble">Element <name/> must have attribute 'wibble'</assert>
+        </rule>
+    </pattern>
+  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="wibble">
+        <rule context="wibble">
+            <assert test=". = $some-global">Element <name/> must have value '<value-of select="$some-global"/>'</assert>
+        </rule>
+    </pattern>
+  <sch:pattern>
+    <sch:rule context="/">
+      <sch:assert test="true()">Always true</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
+                </example>
+            </section>
+            <section>
+                <title>Commentary</title>
+                <para>This element is a convenience for building modular schemas, featuring a pared-down version of element <tag class="element">schema</tag>'s content model.</para>
             </section>
         </chapter>
         <chapter>
@@ -470,6 +519,54 @@
                 <title>Related GitHub issue(s)</title>
                 <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/3">A container element for abstract Schematron rules</link></para>
             </section>
+            <section>
+                <title>Sample usage</title>
+                <example xml:id="rules-elem-example">
+                    <title><literal>rules</literal> element</title>
+                    <para>Given this schema:</para>
+                    <programlisting><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+  <sch:rules>
+    <sch:rule abstract="true" id="abstract-rule">
+      <sch:report test="self::element"/>
+    </sch:rule>
+    <sch:rule abstract="true" id="abstract-rule-2">
+      <sch:report test="name()"/>
+    </sch:rule>
+  </sch:rules>
+  <sch:pattern>
+    <sch:rule context="element">
+      <sch:extends rule="abstract-rule"/>
+    </sch:rule>
+    <sch:rule context="*">
+      <sch:extends rule="abstract-rule-2"/>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
+                    <para>the two abstract <tag class="element">rule</tag> elements contained in <tag class="element">rules</tag> will be instantiated as usual, resulting in this expanded schema:</para>
+                    <programlisting><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+  <sch:pattern>
+    <sch:rule context="element">
+      <sch:report test="self::element"/>
+    </sch:rule>
+    <sch:rule context="*">
+      <sch:report test="name()"/>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
+                </example>
+            </section>
+            <section>
+                <title>Commentary</title>
+                <para>The behaviour of abstract rules and how they are processed remains unchanged here. What is new is the container for abstract rules, which would previously have to have been stored separately and instantiated using <tag>extends/@href</tag>.</para>
+                <para>More background on this can be found in <link xlink:href="https://dmaus.name/blog/2021.02/">this blog post</link> by David Maus.</para>
+            </section>
         </chapter>
     </part>
 </book>
+<!-- TODO:
+    6.7 Localization and language fixup
+    "An implementation shall perform language fixup according to the method defined in section 4.5.6 of XInclude 1.0 when incorporating external definitions (via elements include and extends) and instantiating abstract patterns, abstract rules, diagnostics, and properties."
+    
+    6.8 Base URI fixup
+    "An implementation shall perform base URI fixup according to the method defined in section 4.5.5 of XInclude 1.0 when incorporating external definitions (via elements include and extends)."
+-->
