@@ -44,6 +44,10 @@
                     <programlisting language="xml"><![CDATA[<sch:let name='foo' as='element(foo)'><foo/></sch:let>]]></programlisting>
                 </example>
             </section>
+            <section>
+                <title>Commentary</title>
+                <para>The introduction of this attribute removes the need for implementations to provide custom workarounds, for example the use of <literal>xsl:variable</literal> in XSLT.</para>
+            </section>
         </chapter>
         <chapter>
             <title><tag class="attribute">from</tag></title>
@@ -61,7 +65,7 @@
             <blockquote role='iso'>
                 <title>Clause 5.5.7 (<literal>from</literal> attribute)</title>
                 <para>The <literal>from</literal> attribute contains an expression which restricts the evaluation of patterns in a phase to the subset of the document it selects.</para>
-                <para>The expression shall be evaluated in the context of the instance document root. The results become the context against which rule <literal>context</literal> expressions are evaluated. Variables evaluated in the context of the instance document root are not influenced by the presence of <literal>from</literal> and so are evaluated and scoped as usual.</para>
+                <para xml:id="iso-from-attr">The expression shall be evaluated in the context of the instance document root. The results become the context against which rule <literal>context</literal> expressions are evaluated. Variables evaluated in the context of the instance document root are not influenced by the presence of <literal>from</literal> and so are evaluated and scoped as usual.</para>
                 <para>This behaviour shall not apply to subordinate documents, that is those selected by the <literal>documents</literal> attribute [...].</para>
             </blockquote>
             <section>
@@ -84,42 +88,42 @@
                 <example xml:id="from-att">
                     <title><literal>from</literal> attribute</title>
                     <para>Given this instance document:</para>
-                    <programlisting><![CDATA[<foo>
+                    <programlisting language="xml"><![CDATA[<foo>
     <blort wibble='1'/>
     <bar>]]><phrase role='highlight'><![CDATA[<blort wibble='2'/><blort wibble='3'/>]]></phrase><![CDATA[</bar>
 </foo>]]></programlisting>
                     <para>and this schema:</para>
-                    <programlisting><![CDATA[<sch:schema defaultPhase='wibble'>
-      <sch:phase id='wibble' from='/foo/bar'>
-        <sch:active pattern='wibble'/>
-      </sch:phase>
-      <sch:pattern id='wibble'>
-        <sch:rule context='.//blort[@wibble]'>
-          <sch:report test='@wibble'><sch:value-of select='@wibble'/></sch:report>
-        </sch:rule>
-      </sch:pattern>
-    </sch:schema>]]></programlisting>
+                    <programlisting language="xml"><![CDATA[<sch:schema defaultPhase='wibble'>
+  <sch:phase id='wibble' ]]><phrase role="highlight">from='/foo/bar'</phrase><![CDATA[>
+    <sch:active pattern='wibble'/>
+  </sch:phase>
+  <sch:pattern id='wibble'>
+    <sch:rule context='.//blort[@wibble]'>
+      <sch:report test='@wibble'><sch:value-of select='@wibble'/></sch:report>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
                     <para>only the two instances of <tag class="element">wibble</tag> (highlighted, at XPath <literal>/foo/bar/blort</literal>) will be reported, because the <tag class="attribute">from</tag> attribute constrains the evaluation context to the XPath given (<literal>/foo/bar</literal>).</para>
                 </example>
                 <example xml:id="from-att-empty-sequence">
                     <title><literal>from</literal> attribute: evaluation returns the empty sequence</title>
                     <para>Given the same instance document as <link linkend="from-att">above</link> and this schema:</para>
-                    <programlisting><![CDATA[<sch:schema defaultPhase='wibble'>
-      <sch:phase id='wibble' ]]><phrase role="highlight">from='/no/such/path'</phrase><![CDATA[>
-        <sch:active pattern='wibble'/>
-      </sch:phase>
-      <sch:pattern id='wibble'>
-        <sch:rule context='.//blort[@wibble]'>
-          <sch:report test='@wibble'><sch:value-of select='@wibble'/></sch:report>
-        </sch:rule>
-      </sch:pattern>
-    </sch:schema>]]></programlisting>
+                    <programlisting language="xml"><![CDATA[<sch:schema defaultPhase='wibble'>
+  <sch:phase id='wibble' ]]><phrase role="highlight">from='/no/such/path'</phrase><![CDATA[>
+    <sch:active pattern='wibble'/>
+  </sch:phase>
+  <sch:pattern id='wibble'>
+    <sch:rule context='.//blort[@wibble]'>
+      <sch:report test='@wibble'><sch:value-of select='@wibble'/></sch:report>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
                     <para>nothing is returned because evaluating <tag class="attribute">from</tag> (highlighted) returns the empty sequence. The rule will consequently not fire and none of its assertions will be evaluated.</para>
                 </example>
             </section>
             <section>
                 <title>Commentary</title>
-                <para>The implication of the phrase "The results become the context against which rule <literal>context</literal> expressions are evaluated" is that if the results are the empty sequence, there is nothing to validate and so the active patterns belonging to the phase are not evaluated (see <xref linkend="from-att-empty-sequence"/>).</para>
+                <para>The implication of the phrase "<link linkend="iso-from-attr">The results become the context against which rule <literal>context</literal> expressions are evaluated</link>" is that if the results are the empty sequence, there is nothing to validate and so the active patterns belonging to the phase are not evaluated (see <xref linkend="from-att-empty-sequence"/>).</para>
             </section>
         </chapter>
         <chapter>
@@ -160,13 +164,19 @@
                 <example>
                     <title><literal>schematronEdition</literal> attribute</title>
                     <programlisting language="xml"><![CDATA[<sch:schema ]]><phrase role="highlight">schematronEdition='2025'</phrase><![CDATA[>
-      <sch:pattern>
-        <sch:rule context='*'>
-          <sch:report test='true()'><sch:name/></sch:report>
-        </sch:rule>
-      </sch:pattern>
-    </sch:schema>]]></programlisting>
+  <sch:pattern>
+    <sch:rule context='*'>
+      <sch:report test='true()'><sch:name/></sch:report>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
+                    <para>The implementation <link xlink:href="https://github.com/AndrewSales/XQS">XQS</link> for example implements this feature using a command-line (and API) option, <literal>report-edition</literal>. If this is switched on, the application reports an empty <tag class="element">schema</tag> element, including any <tag class="attribute">schematronEdition</tag> attribute, as the first item returned, e.g.</para>
+                    <programlisting language="xml"><![CDATA[<schema xmlns='http://purl.oclc.org/dsdl/schematron' ]]><phrase role="highlight">schematronEdition='2025'</phrase><![CDATA[/>]]></programlisting>
                 </example>
+            </section>
+            <section>
+                <title>Commentary</title>
+                <para>This attribute provides a mechanism to differentiate the version of schema markup used without changing the namespace for schemas generally, in the interests of backward compatibility.</para>
             </section>
         </chapter>        
         <chapter>
@@ -288,14 +298,14 @@
                 <example xml:id="when-att">
                     <title><literal>from</literal> attribute</title>
                     <para>Given this instance document:</para>
-                    <programlisting><![CDATA[<foo>
+                    <programlisting language="xml"><![CDATA[<foo>
 <blort wibble='1'/>
 <bar>]]><phrase role='highlight'><![CDATA[<blort wibble='2'/><blort wibble='3'/>]]></phrase><![CDATA[</bar>
 </foo>]]></programlisting>
                     <para>and this schema:</para>
-                    <programlisting><![CDATA[<sch:schema>
+                    <programlisting language="xml"><![CDATA[<sch:schema>
   <sch:phase id='foo' when='/foo'>
-    <sch:active pattern='wibble-1'/>
+    ]]><phrase role="highlight"><![CDATA[<sch:active pattern='wibble-1'/>]]></phrase><![CDATA[
   </sch:phase>
   <sch:phase id='wibble' when='//@wibble'>
     <sch:active pattern='wibble-2'/>
@@ -321,7 +331,7 @@
 </sch:schema>]]></programlisting>
                     <para>all instances of the <tag class="attribute">when</tag> attribute match when evaluated against the document instance, but only the <emphasis>first</emphasis> matching phase in document order (<literal>wibble-1</literal>) is selected.</para>
                     <note><para>This result is obtained only if the implementation is invoked using <literal>#ANY</literal> to specify that the phase should be dynamically selected by evaluating <tag class="attribute">when</tag> attributes.</para>
-                    <para>If no phase is selected with this schema, the behaviour matches that of specifying <literal>#ALL</literal> instead: all patterns become active and are therefore evaluated.</para></note>
+                    <para>If no phase is selected with this schema, the behaviour matches that of specifying <literal>#ALL</literal> instead: all patterns become active and all are therefore evaluated.</para></note>
                 </example>
             </section>
             <section>
@@ -334,7 +344,7 @@
     <part>
         <title>New elements</title>
         <chapter>
-            <title>Element <tag class="element">group</tag></title>
+            <title><tag class="element">group</tag></title>
             <para>This element has the same content model as element <tag class="element">pattern</tag>. Patterns and groups may be combined in a schema.</para>
             <blockquote role="iso" xml:id="group-elem">
                 <title>Clause 5.4.5 (<literal>group</literal> element)</title>
@@ -378,24 +388,28 @@
                 <example xml:id="group-elem-example">
                     <title><literal>group</literal> element</title>
                     <para>Given this instance document:</para>
-                    <programlisting><![CDATA[<foo/>]]></programlisting>
+                    <programlisting language="xml"><![CDATA[<foo/>]]></programlisting>
                     <para>and this schema:</para>
-                    <programlisting><![CDATA[<sch:schema>
-  <sch:group>
+                    <programlisting language="xml"><![CDATA[<sch:schema>
+  ]]><phrase role="highlight">&lt;sch:group></phrase><![CDATA[
     <sch:rule context='*'>
       <sch:assert test='name() eq "bar"'>root element is <sch:name/></sch:assert>
     </sch:rule>
     <sch:rule context='foo'>
       <sch:report test='.'>should reach here</sch:report>
     </sch:rule>
-  </sch:group>
+  ]]><phrase role="highlight">&lt;/sch:group></phrase><![CDATA[
 </sch:schema>]]></programlisting>
                     <para><emphasis>both</emphasis> rules will fire and their assertions will be evaluated, because within the context of a <tag class="element">group</tag>, all rules are evaluated. Contrast this with <tag class="element">pattern</tag>: in this instance, only the <emphasis>first</emphasis> rule would fire (if a child of <tag class="element">pattern</tag>), because the context has already been matched when the second rule's context is evaluated.</para>
                 </example>
             </section>
+            <section>
+                <title>Commentary</title>
+                <para>This element gives the option to have <emphasis>all</emphasis> rules evaluated regardless, addressing one of the commonest issues faced by schema authors.</para>
+            </section>
         </chapter>
         <chapter>
-            <title>Element <tag class="element">library</tag></title>
+            <title><tag class="element">library</tag></title>
             <itemizedlist>
                 <title>Element context(s)</title>
                 <listitem>
@@ -425,7 +439,7 @@
                 <example xml:id="library-elem-example">
                     <title><literal>library</literal> element</title>
                     <para>Given this schema:</para>
-                    <programlisting><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
   <sch:extends href=']]><phrase role='highlight'>library.sch</phrase><![CDATA['/>
   <sch:pattern>
     <sch:rule context="/">
@@ -434,7 +448,7 @@
   </sch:pattern>
 </sch:schema>]]></programlisting>
                     <para>and the library imported via <tag class="element">extends</tag> from <literal>library.sch</literal> (see highlight above):</para>
-                    <programlisting><![CDATA[<library xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+                    <programlisting language="xml"><![CDATA[<library xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
     <pattern id='blort'>
         <rule context="blort">
             <assert test="@wibble">Element <name/> must have attribute 'wibble'</assert>
@@ -447,8 +461,8 @@
     </pattern>    
 </library>]]></programlisting>
                     <para>the contents of the library will be included in place of the <tag class="element">extends</tag> element, to produce the resulting schema:</para>
-                    <programlisting><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
-  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="blort">
+                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+  ]]><phrase role="highlight"><![CDATA[<pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="blort">
         <rule context="blort">
             <assert test="@wibble">Element <name/> must have attribute 'wibble'</assert>
         </rule>
@@ -457,7 +471,7 @@
         <rule context="wibble">
             <assert test=". = $some-global">Element <name/> must have value '<value-of select="$some-global"/>'</assert>
         </rule>
-    </pattern>
+    </pattern>]]></phrase><![CDATA[
   <sch:pattern>
     <sch:rule context="/">
       <sch:assert test="true()">Always true</sch:assert>
@@ -472,7 +486,7 @@
             </section>
         </chapter>
         <chapter>
-            <title>Element <tag class="element">rules</tag></title>
+            <title><tag class="element">rules</tag></title>
             <itemizedlist>
                 <title>Element context(s)</title>
                 <listitem>
@@ -524,15 +538,15 @@
                 <example xml:id="rules-elem-example">
                     <title><literal>rules</literal> element</title>
                     <para>Given this schema:</para>
-                    <programlisting><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-  <sch:rules>
+                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+  ]]><phrase role="highlight"><![CDATA[<sch:rules>
     <sch:rule abstract="true" id="abstract-rule">
       <sch:report test="self::element"/>
     </sch:rule>
     <sch:rule abstract="true" id="abstract-rule-2">
       <sch:report test="name()"/>
     </sch:rule>
-  </sch:rules>
+  </sch:rules>]]></phrase><![CDATA[
   <sch:pattern>
     <sch:rule context="element">
       <sch:extends rule="abstract-rule"/>
@@ -543,7 +557,7 @@
   </sch:pattern>
 </sch:schema>]]></programlisting>
                     <para>the two abstract <tag class="element">rule</tag> elements contained in <tag class="element">rules</tag> will be instantiated as usual, resulting in this expanded schema:</para>
-                    <programlisting><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <sch:pattern>
     <sch:rule context="element">
       <sch:report test="self::element"/>
