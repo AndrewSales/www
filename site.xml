@@ -89,6 +89,9 @@
             <title>Schematron</title>
             <itemizedlist>
                 <listitem>
+                    <para><link xlink:href="schematron4/index.html">What's New In Schematron 4</link></para>
+                </listitem>
+                <listitem>
                     <para><link xlink:href="https://www.schematronist.org/mailman/listinfo/schematron_schematronist.org">Schematron Mailing List</link></para>
                 </listitem>
                 <listitem>
@@ -144,8 +147,11 @@
             </variablelist>
         </section>
         <section>
-            <title>Papers</title>
+            <title>Papers and Presentations</title>
             <itemizedlist>
+                <listitem>
+                    <para><emphasis><link xlink:href="https://www.youtube.com/embed/P_vnQa-H-0I">Content quality assurance in the era of AI</link></emphasis>, Annual Publishing Conference, London, 5th November 2024.</para>
+                </listitem>
                 <listitem>
                     <para><emphasis><link xlink:href="https://markupuk.org/2023/webhelp/index.html#ar11.html">XQS: A Native XQuery Schematron Implementation</link></emphasis>, Markup UK 2023.</para>
                 </listitem>

@@ -214,6 +214,11 @@
                     <para>TODO: as phase variable reference</para>
                 </example>
             </section>
+            <section>
+                <title>Commentary</title>
+                <para>This value of this attribute (along with <tag class="attribute">flag</tag> and <tag class="attribute">role</tag>) can now be dynamically evaluated on output to SVRL.</para>
+                <para>For details, see <xref linkend="dynamic-atts"/>.</para>
+            </section>
         </chapter>
         <chapter>
             <title><tag class="attribute">visit-each</tag></title>
@@ -576,11 +581,108 @@
             </section>
         </chapter>
     </part>
+    <part>
+        <title>New functionality</title>
+        <chapter xml:id="dynamic-atts">
+            <title>Dynamic evaluation of attributes <tag class="attribute">flag</tag>, <tag class="attribute">role</tag> and <tag class="attribute">severity</tag></title>
+            <blockquote role='iso'>
+                <title>Clauses 5.5.6 (<literal>role</literal> attribute), 5.5.14 (<literal>role</literal> attribute), 5.5.16 (<literal>severity</literal> attribute)</title>
+                <para>If the value of a [<literal>flag</literal>, <literal>role</literal>, <literal>severity</literal>] attribute given in a schema is a variable reference, its value shall be dynamically evaluated. This mechanism is provided to enable the [...] value to vary, for example according to the selected phase and its in-scope variables.</para>
+            </blockquote>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/64">Ability for role value to be dynamic or different per phase</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example>
+                    <title>Dynamic evaluation of attributes</title>
+                    <para>The following schema</para>
+                    <programlisting language="xml"><![CDATA[<sch:schema defaultPhase='phase'>
+  <sch:ns prefix='a' uri='b'/>
+  <sch:let name='c' value='d'/>
+  <sch:phase id='phase'>
+    <sch:let name='flag' value='"foo"'/>
+    <sch:let name='role' value='"bar"'/>
+    <sch:let name='severity' value='"blort"'/>
+    <sch:active pattern='foo'/>
+  </sch:phase>
+  <sch:pattern id='foo'>
+    <sch:rule context='*'>
+      <sch:assert test='false()' ]]><phrase role='highlight'>flag='$flag' role='$role' severity='$severity'</phrase><![CDATA[></sch:assert>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
+                    <para>would result in SVRL containing this <tag class="element">failed-assert</tag>:</para>
+                    <programlisting language="xml"><![CDATA[<svrl:failed-assert test='false()' ]]><phrase role='highlight'>flag='foo' role='bar' severity='blort'</phrase><![CDATA[/>]]></programlisting>
+                </example>
+            </section>
+        </chapter>
+        <chapter xml:id="uri-lang-fixup">
+            <title>Base URI and language fixup</title>
+            <blockquote role='iso'>
+                <title>Clauses 6.7 (Localization and language fixup)</title>
+                <para>An implementation shall perform language fixup according to the method defined in section 4.5.6 of XInclude 1.0 when incorporating external definitions (via elements <literal>include</literal> and <literal>extends</literal>) and instantiating abstract patterns, abstract rules, diagnostics, and properties.</para>
+            </blockquote>
+            <blockquote role='iso'>
+                <title>Clauses 6.8 (Base URI fixup)</title>
+                <para>An implementation shall perform base URI fixup according to the method defined in section 4.5.5 of XInclude 1.0 when incorporating external definitions (via elements <literal>include</literal> and <literal>extends</literal>).</para>
+            </blockquote>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/2">Base URI fixup</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <para>Note this relates to the resolution of URIs during the inclusion of external declarations.</para>
+            </section>
+        </chapter>
+        <chapter xml:id="schema-param">
+            <title>Schema-level parameters (top-level <tag class="element">param</tag> elements)</title>
+            <blockquote role='iso'>
+                <title>Clauses 5.4.11 (<literal>param</literal> element)</title>
+                <para>The  <literal>param</literal>  element specifies a name-value pair providing parameters for an abstract pattern or a schema. [...] The  <literal>value</literal>  attribute is a fragment of a query. The <literal>value</literal> attribute is required for parameters specified for schemas. The value of a parameter for a schema may be overridden at user option. This mechanism is implementation-defined.</para>
+                <para>Parameter names shall be distinct within the scope of a pattern or schema.</para>
+            </blockquote>
+            <section>
+                <title>Declaration</title>
+                <programlisting>element schema {
+        attribute id { xsd:ID }?,
+        rich,
+        attribute schemaVersion { non-empty-string }?,
+        attribute schematronEdition { non-empty-string }?,
+        attribute defaultPhase { xsd:IDREF }?,
+        attribute queryBinding { non-empty-string }?,
+        (foreign
+         &amp; (inclusion | extends)*
+         &amp; (title?, ns*, p*, <phrase role="highlight">param*</phrase>, let*, phase*, abstract-rules*, (rule-set|pattern)+, p*, diagnostics?, properties?))
+    }</programlisting>
+            </section>
+            <section>
+                <title>Related GitHub issue(s)</title>
+                <para><link xlink:href="https://github.com/Schematron/schematron-enhancement-proposals/issues/34">Pass parameters to the validating stylesheet at validation runtime</link></para>
+            </section>
+            <section>
+                <title>Sample usage</title>
+                <example>
+                    <title>Schema-level parameters</title>
+                    <para>Validating a document against this schema:</para>
+                    <programlisting language="xml"><![CDATA[<sch:schema>]]>
+  <phrase role='highlight'><![CDATA[<sch:param name='myParam' value='"bar"'/>]]></phrase><![CDATA[
+  <sch:pattern id='foo'>
+    <sch:rule context='*'>
+      <sch:assert test='false()'><sch:value-of select='$myParam'/></sch:assert>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>
+                    <para>would result in SVRL containing:</para>
+                    <programlisting language="xml"><![CDATA[<svrl:failed-assert test='false()'>]]><phrase role="highlight">bar</phrase><![CDATA[</svrl:failed-assert>]]></programlisting>
+                </example>
+            </section>
+            <section>
+                <title>Commentary</title>
+                <para>Note the wording "[...] <emphasis>may</emphasis> be overridden at user option", which means overriding a parameter in this way is permitted but is not a feature implementations are obliged to support.</para>
+            </section>
+        </chapter>
+    </part>
 </book>
-<!-- TODO:
-    6.7 Localization and language fixup
-    "An implementation shall perform language fixup according to the method defined in section 4.5.6 of XInclude 1.0 when incorporating external definitions (via elements include and extends) and instantiating abstract patterns, abstract rules, diagnostics, and properties."
-    
-    6.8 Base URI fixup
-    "An implementation shall perform base URI fixup according to the method defined in section 4.5.5 of XInclude 1.0 when incorporating external definitions (via elements include and extends)."
--->
