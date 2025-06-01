@@ -207,11 +207,44 @@
             <section>
                 <title>Sample usage</title>
                 <example>
-                    <title><literal>severity</literal> attribute</title>
-                    <para>TODO: assert</para>
-                    <para>TODO: report</para>
-                    <para>TODO: as variable reference</para>
-                    <para>TODO: as phase variable reference</para>
+                    <title><literal>severity</literal> attribute: element <tag class="element">report</tag></title>
+                    <para>Assertion:</para>
+                    <programlisting><![CDATA[<sch:report test='true()' ]]><phrase role="highlight">severity='warning'</phrase><![CDATA[>...</sch:report>]]></programlisting>
+                    <para>SVRL output:</para>
+                    <programlisting><![CDATA[<svrl:successful-report test='true()' ]]><phrase role="highlight">severity='warning'</phrase><![CDATA[>...</svrl:successful-report>]]></programlisting>                    
+                </example>
+                <example>
+                    <title><literal>severity</literal> attribute: element <tag class="element">assert</tag></title>
+                    <para>Assertion:</para>
+                    <programlisting><![CDATA[<sch:assert test='false()' ]]><phrase role="highlight">severity='error'</phrase><![CDATA[>...</sch:assert>]]></programlisting>
+                    <para>SVRL output:</para>
+                    <programlisting><![CDATA[<svrl:failed-assert test='false()' ]]><phrase role="highlight">severity='error'</phrase><![CDATA[>...</svrl:failed-assert>]]></programlisting>
+                </example>
+                <example>
+                    <title><literal>severity</literal> attribute: user-defined value</title>
+                    <para>Assertion:</para>
+                    <programlisting><![CDATA[<sch:assert test='false()' ]]><phrase role="highlight">severity='M-5093-K4'</phrase><![CDATA[>...</sch:assert>]]></programlisting>
+                    <para>SVRL output:</para>
+                    <programlisting><![CDATA[<svrl:failed-assert test='false()' ]]><phrase role="highlight">severity='M-5093-K4'</phrase><![CDATA[>...</svrl:failed-assert>]]></programlisting>
+                </example>
+                    <example>
+                        <title><literal>severity</literal> attribute: dynamic evaluation</title>
+                        <para>Schema:</para>
+                    <programlisting><![CDATA[<sch:schema ]]><phrase role="highlight">defaultPhase='phase'</phrase><![CDATA[>
+  <sch:ns prefix='a' uri='b'/>
+  <sch:let name='c' value='d'/>
+  <sch:phase id=']]><phrase role="highlight">phase</phrase><![CDATA['>
+    <sch:let name=']]><phrase role="highlight">dynamic-severity</phrase><![CDATA[' value=']]><phrase role="highlight">"bar"</phrase><![CDATA['/>
+    <sch:active pattern='foo'/>
+  </sch:phase>
+  <sch:pattern id='foo'>
+    <sch:rule context='*'>
+      <sch:assert test='false()' severity=']]><phrase role="highlight">$dynamic-severity</phrase><![CDATA['>...</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+</sch:schema>]]></programlisting>    
+                    <para>SVRL output for failed assertion:</para>
+                    <programlisting><![CDATA[<svrl:failed-assert test='false()' ]]><phrase role="highlight">severity='bar'</phrase><![CDATA[>...</svrl:failed-assert>]]></programlisting>
                 </example>
             </section>
             <section>
@@ -309,7 +342,7 @@
 </foo>]]></programlisting>
                     <para>and this schema:</para>
                     <programlisting language="xml"><![CDATA[<sch:schema>
-  <sch:phase id='foo' when='/foo'>
+  <sch:phase id='foo' ]]><phrase role="highlight">when='/foo'</phrase><![CDATA[>
     ]]><phrase role="highlight"><![CDATA[<sch:active pattern='wibble-1'/>]]></phrase><![CDATA[
   </sch:phase>
   <sch:phase id='wibble' when='//@wibble'>
@@ -318,7 +351,7 @@
   <sch:phase id='bar' when='/foo/bar'>
     <sch:active pattern='wibble-3'/>
   </sch:phase>
-  <sch:pattern id='wibble-1'>
+  <sch:pattern id=']]><phrase role="highlight">wibble-1</phrase><![CDATA['>
     <sch:rule context='//blort[@wibble]'>
       <sch:report test='@wibble'><sch:value-of select='@wibble'/></sch:report>
     </sch:rule>
@@ -334,9 +367,22 @@
     </sch:rule>
   </sch:pattern>
 </sch:schema>]]></programlisting>
-                    <para>all instances of the <tag class="attribute">when</tag> attribute match when evaluated against the document instance, but only the <emphasis>first</emphasis> matching phase in document order (<literal>wibble-1</literal>) is selected.</para>
+                    <para>all instances of the <tag class="attribute">when</tag> attribute match when evaluated against the document instance, but only the <emphasis>first</emphasis> matching phase in document order (<literal>wibble-1</literal>) is selected:</para>
+                    <programlisting language="xml"><![CDATA[<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ]]><phrase role="highlight">phase="foo"</phrase><![CDATA[>
+  ]]><phrase role="highlight"><![CDATA[<svrl:active-pattern id="wibble-1"/>]]></phrase><![CDATA[
+  <svrl:fired-rule context="//blort[@wibble]"/>
+  <successful-report xmlns="http://purl.oclc.org/dsdl/svrl" location="/Q{}foo[1]/Q{}blort[1]" test="@wibble">
+    <svrl:text>1</svrl:text>
+  </successful-report>
+  <successful-report xmlns="http://purl.oclc.org/dsdl/svrl" location="/Q{}foo[1]/Q{}bar[1]/Q{}blort[1]" test="@wibble">
+    <svrl:text>2</svrl:text>
+  </successful-report>
+  <successful-report xmlns="http://purl.oclc.org/dsdl/svrl" location="/Q{}foo[1]/Q{}bar[1]/Q{}blort[2]" test="@wibble">
+    <svrl:text>3</svrl:text>
+  </successful-report>
+</svrl:schematron-output>]]></programlisting>
                     <note><para>This result is obtained only if the implementation is invoked using <literal>#ANY</literal> to specify that the phase should be dynamically selected by evaluating <tag class="attribute">when</tag> attributes.</para>
-                    <para>If no phase is selected with this schema, the behaviour matches that of specifying <literal>#ALL</literal> instead: all patterns become active and all are therefore evaluated.</para></note>
+                    <para>If no phase is selected with this schema, the behaviour matches that of specifying <literal>#ALL</literal> instead: <emphasis>all</emphasis> patterns become active and <emphasis>all</emphasis> are therefore evaluated.</para></note>
                 </example>
             </section>
             <section>
@@ -353,7 +399,7 @@
             <para>This element has the same content model as element <tag class="element">pattern</tag>. Patterns and groups may be combined in a schema.</para>
             <blockquote role="iso" xml:id="group-elem">
                 <title>Clause 5.4.5 (<literal>group</literal> element)</title>
-                <para>The <literal>group</literal> element has the same structure and semantics as element pattern[...], except that the if-then-else behaviour of evaluating rules within a pattern shall not apply (see <link linkend="order-side-effects">6.6</link>).</para>
+                <para>The <literal>group</literal> element has the same structure and semantics as element <literal>pattern</literal> [...], except that the if-then-else behaviour of evaluating rules within a pattern shall not apply (see <link linkend="order-side-effects">6.6</link>).</para>
             </blockquote>
             <blockquote role="iso" xml:id="order-side-effects">
                 <title>Clause 6.6 Order and side-effects</title>
@@ -427,7 +473,7 @@
             </blockquote>
             <section>
                 <title>Declaration</title>
-                <programlisting>element library {
+                <programlisting>element <phrase role="highlight">library</phrase> {
         attribute id { xsd:ID }?,
         rich,
         (foreign
@@ -564,12 +610,12 @@
                     <para>the two abstract <tag class="element">rule</tag> elements contained in <tag class="element">rules</tag> will be instantiated as usual, resulting in this expanded schema:</para>
                     <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <sch:pattern>
-    <sch:rule context="element">
+    ]]><phrase role='highlight'><![CDATA[<sch:rule context="element">
       <sch:report test="self::element"/>
     </sch:rule>
     <sch:rule context="*">
       <sch:report test="name()"/>
-    </sch:rule>
+    </sch:rule>]]></phrase><![CDATA[
   </sch:pattern>
 </sch:schema>]]></programlisting>
                 </example>
@@ -602,9 +648,9 @@
   <sch:ns prefix='a' uri='b'/>
   <sch:let name='c' value='d'/>
   <sch:phase id='phase'>
-    <sch:let name='flag' value='"foo"'/>
+    ]]><phrase role="highlight"><![CDATA[<sch:let name='flag' value='"foo"'/>
     <sch:let name='role' value='"bar"'/>
-    <sch:let name='severity' value='"blort"'/>
+    <sch:let name='severity' value='"blort"'/>]]></phrase><![CDATA[
     <sch:active pattern='foo'/>
   </sch:phase>
   <sch:pattern id='foo'>
@@ -671,7 +717,7 @@
   <phrase role='highlight'><![CDATA[<sch:param name='myParam' value='"bar"'/>]]></phrase><![CDATA[
   <sch:pattern id='foo'>
     <sch:rule context='*'>
-      <sch:assert test='false()'><sch:value-of select='$myParam'/></sch:assert>
+      <sch:assert test='false()'><sch:value-of select=']]><phrase role="highlight">$myParam</phrase><![CDATA['/></sch:assert>
     </sch:rule>
   </sch:pattern>
 </sch:schema>]]></programlisting>
