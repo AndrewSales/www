@@ -292,10 +292,26 @@
                 <title>Sample usage</title>
                 <example>
                     <title><literal>visit-each</literal> attribute</title>
-                    <programlisting language="xml"><![CDATA[<sch:rule context='para' visit-each='fn:analyze-string(., "foo")'>
-  <sch:report test='fn:match'>Found matching substring "foo" at index <sch:value-of select='string-length(string-join(preceding-sibling::fn:*))+1'/> in para.</sch:report>
+                    <para>Validating this document:</para>
+                    <programlisting language="xml"><![CDATA[<foo>foo bar blort foo bar</foo>]]></programlisting>
+                    <para>against a schema containing this rule:</para>
+                    <programlisting language="xml"><![CDATA[<sch:rule context='foo' visit-each='fn:analyze-string(., "foo")/fn:match'>
+  <sch:report test='.'><sch:name/> at index <sch:value-of select='string-length(string-join(preceding-sibling::fn:*))+1'/></sch:report>
 </sch:rule>]]></programlisting>
+                    <para>produces SVRL output containing:</para>
+                    <programlisting language="xml"><![CDATA[<svrl:fired-rule context="/foo" ]]><phrase role='highlight'>visit-each="analyze-string(., &quot;foo&quot;)/fn:match"</phrase><![CDATA[/>
+<successful-report xmlns="http://purl.oclc.org/dsdl/svrl" location="Q{http://www.w3.org/2005/xpath-functions}root()/Q{http://www.w3.org/2005/xpath-functions}match[1]" test=".">
+  <svrl:text>foo at index 1</svrl:text>
+</successful-report>
+<successful-report xmlns="http://purl.oclc.org/dsdl/svrl" location="Q{http://www.w3.org/2005/xpath-functions}root()/Q{http://www.w3.org/2005/xpath-functions}match[2]" test=".">
+  <svrl:text>foo at index 15</svrl:text>
+</successful-report>]]></programlisting>
                 </example>
+            </section>
+            <section>
+                <title>Commentary</title>
+                <para>This attribute effectively allows the schema author to iterate over the sequence of items returned. While the rule context expression in the example above can be re-written as</para>
+                <programlisting language="xml">/foo/analyze-string(., "foo")/fn:match</programlisting>                <para>and produce the same result, <tag class="attribute">visit-each</tag> enables the expression to be decomposed for clarity.</para>
             </section>
         </chapter>
         <chapter>
@@ -338,7 +354,7 @@
                     <para>Given this instance document:</para>
                     <programlisting language="xml"><![CDATA[<foo>
 <blort wibble='1'/>
-<bar>]]><phrase role='highlight'><![CDATA[<blort wibble='2'/><blort wibble='3'/>]]></phrase><![CDATA[</bar>
+<bar><blort wibble='2'/><blort wibble='3'/></bar>
 </foo>]]></programlisting>
                     <para>and this schema:</para>
                     <programlisting language="xml"><![CDATA[<sch:schema>
