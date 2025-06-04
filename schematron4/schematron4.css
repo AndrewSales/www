@@ -1,0 +1,53 @@
+body{
+    font-family:arial, helvetica, sans-serif;
+    padding-left:30px;
+    padding-right:30px
+}
+
+div.section{
+    padding-top:5px;
+    padding-bottom:5px
+}
+
+span.highlight{
+    background-color:yellow;
+}
+
+div.blockquote{
+    padding-top:10px
+}
+
+div.blockquote-title{
+    font-size:14pt
+}
+
+blockquote{
+    border-style:solid;
+    border-color:pink;
+    padding:20px;
+    padding-top:10px;
+    padding-bottom:30px;
+    background-color: #F8F8F8
+}
+
+blockquote > p{
+    padding-left:15px;
+}
+
+blockquote > p:before {
+ content: open-quote;
+ font-size:25pt
+}
+
+blockquote > p:after {
+ content: close-quote;
+ font-size:25pt
+}
+
+code{
+    font-size:large
+}
+
+h2.title > code{
+    font-size:xx-large
+}
