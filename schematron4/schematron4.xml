@@ -310,7 +310,7 @@
             </section>
             <section>
                 <title>Commentary</title>
-                <para>This attribute effectively allows the schema author to iterate over the sequence of items returned. While the rule context expression in the example above can be re-written as</para>
+                <para>This attribute effectively allows the schema author to iterate over the sequence of items returned. While the rule context expression in the example above can (depending on the query language binding) be re-written as</para>
                 <programlisting language="xml">/foo/analyze-string(., "foo")/fn:match</programlisting>                <para>and produce the same result, <tag class="attribute">visit-each</tag> enables the expression to be decomposed for clarity.</para>
             </section>
         </chapter>

@@ -150,7 +150,13 @@
             <title>Papers and Presentations</title>
             <itemizedlist>
                 <listitem>
+                    <para><emphasis><link xlink:href="slides/schematron%20users%20meetup%202025.pdf">ISO Schematron 2025 Standards Update</link></emphasis>, Schematron Users Meetup, Markup UK, London, 5th June 2025.</para>
+                </listitem>
+                <listitem>
                     <para><emphasis><link xlink:href="https://www.youtube.com/embed/P_vnQa-H-0I">Content quality assurance in the era of AI</link></emphasis>, Annual Publishing Conference, London, 5th November 2024.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis><link xlink:href="slides/schematron%20users%20meetup%202024.pdf">ISO Schematron 2025 Standards Update</link></emphasis>, Schematron Users Meetup, XML Prague, 6th June 2024.</para>
                 </listitem>
                 <listitem>
                     <para><emphasis><link xlink:href="https://markupuk.org/2023/webhelp/index.html#ar11.html">XQS: A Native XQuery Schematron Implementation</link></emphasis>, Markup UK 2023.</para>
