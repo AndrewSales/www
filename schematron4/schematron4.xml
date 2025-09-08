@@ -93,7 +93,7 @@
     <bar>]]><phrase role='highlight'><![CDATA[<blort wibble='2'/><blort wibble='3'/>]]></phrase><![CDATA[</bar>
 </foo>]]></programlisting>
                     <para>and this schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema defaultPhase='wibble'>
+                    <programlisting language="xml"><![CDATA[<sch:schema schematronEdition='2025' defaultPhase='wibble'>
   <sch:phase id='wibble' ]]><phrase role="highlight">from='/foo/bar'</phrase><![CDATA[>
     <sch:active pattern='wibble'/>
   </sch:phase>
@@ -108,7 +108,7 @@
                 <example xml:id="from-att-empty-sequence">
                     <title><literal>from</literal> attribute: evaluation returns the empty sequence</title>
                     <para>Given the same instance document as <link linkend="from-att">above</link> and this schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema defaultPhase='wibble'>
+                    <programlisting language="xml"><![CDATA[<sch:schema schematronEdition='2025' defaultPhase='wibble'>
   <sch:phase id='wibble' ]]><phrase role="highlight">from='/no/such/path'</phrase><![CDATA[>
     <sch:active pattern='wibble'/>
   </sch:phase>
@@ -134,7 +134,7 @@
                     <para><tag class="element">schema</tag></para>
                 </listitem>
             </itemizedlist>
-            <para>This attribute is <emphasis role="bold">optional</emphasis> and states the version of Schematron (i.e. which edition of the standard) the schema conforms to.</para>
+            <para>This attribute is <emphasis role="bold">optional</emphasis> and states the version of Schematron (i.e. which edition of the standard) the schema conforms to. The attribute is shown in all schema examples given in this guide, for clarity.</para>
             <blockquote role='iso'>
                 <title>Clause 5.5.15 (<literal>schematronEdition</literal> attribute)</title>
                 <para>The value of this attribute where specified shall be <literal>2025</literal>.</para>
@@ -230,7 +230,7 @@
                     <example>
                         <title><literal>severity</literal> attribute: dynamic evaluation</title>
                         <para>Schema:</para>
-                    <programlisting><![CDATA[<sch:schema ]]><phrase role="highlight">defaultPhase='phase'</phrase><![CDATA[>
+                    <programlisting><![CDATA[<sch:schema schematronEdition='2025']]><phrase role="highlight">defaultPhase='phase'</phrase><![CDATA[>
   <sch:ns prefix='a' uri='b'/>
   <sch:let name='c' value='d'/>
   <sch:phase id=']]><phrase role="highlight">phase</phrase><![CDATA['>
@@ -357,7 +357,7 @@
 <bar><blort wibble='2'/><blort wibble='3'/></bar>
 </foo>]]></programlisting>
                     <para>and this schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema>
+                    <programlisting language="xml"><![CDATA[<sch:schema schematronEdition='2025'>
   <sch:phase id='foo' ]]><phrase role="highlight">when='/foo'</phrase><![CDATA[>
     ]]><phrase role="highlight"><![CDATA[<sch:active pattern='wibble-1'/>]]></phrase><![CDATA[
   </sch:phase>
@@ -457,7 +457,7 @@
                     <para>Given this instance document:</para>
                     <programlisting language="xml"><![CDATA[<foo/>]]></programlisting>
                     <para>and this schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema>
+                    <programlisting language="xml"><![CDATA[<sch:schema schematronEdition='2025'>
   ]]><phrase role="highlight">&lt;sch:group></phrase><![CDATA[
     <sch:rule context='*'>
       <sch:assert test='name() eq "bar"'>root element is <sch:name/></sch:assert>
@@ -506,7 +506,7 @@
                 <example xml:id="library-elem-example">
                     <title><literal>library</literal> element</title>
                     <para>Given this schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery" schematronEdition='2025'>
   <sch:extends href=']]><phrase role='highlight'>library.sch</phrase><![CDATA['/>
   <sch:pattern>
     <sch:rule context="/">
@@ -515,7 +515,7 @@
   </sch:pattern>
 </sch:schema>]]></programlisting>
                     <para>and the library imported via <tag class="element">extends</tag> from <literal>library.sch</literal> (see highlight above):</para>
-                    <programlisting language="xml"><![CDATA[<library xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+                    <programlisting language="xml"><![CDATA[<library xmlns="http://purl.oclc.org/dsdl/schematron">
     <pattern id='blort'>
         <rule context="blort">
             <assert test="@wibble">Element <name/> must have attribute 'wibble'</assert>
@@ -528,7 +528,7 @@
     </pattern>    
 </library>]]></programlisting>
                     <para>the contents of the library will be included in place of the <tag class="element">extends</tag> element, to produce the resulting schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery">
+                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xquery" schematronEdition='2025'>
   ]]><phrase role="highlight"><![CDATA[<pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="blort">
         <rule context="blort">
             <assert test="@wibble">Element <name/> must have attribute 'wibble'</assert>
@@ -605,7 +605,7 @@
                 <example xml:id="rules-elem-example">
                     <title><literal>rules</literal> element</title>
                     <para>Given this schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" schematronEdition='2025'>
   ]]><phrase role="highlight"><![CDATA[<sch:rules>
     <sch:rule abstract="true" id="abstract-rule">
       <sch:report test="self::element"/>
@@ -624,7 +624,7 @@
   </sch:pattern>
 </sch:schema>]]></programlisting>
                     <para>the two abstract <tag class="element">rule</tag> elements contained in <tag class="element">rules</tag> will be instantiated as usual, resulting in this expanded schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+                    <programlisting language="xml"><![CDATA[<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" schematronEdition='2025'>
   <sch:pattern>
     ]]><phrase role='highlight'><![CDATA[<sch:rule context="element">
       <sch:report test="self::element"/>
@@ -660,7 +660,7 @@
                 <example>
                     <title>Dynamic evaluation of attributes</title>
                     <para>The following schema</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema defaultPhase='phase'>
+                    <programlisting language="xml"><![CDATA[<sch:schema defaultPhase='phase' schematronEdition='2025'>
   <sch:ns prefix='a' uri='b'/>
   <sch:let name='c' value='d'/>
   <sch:phase id='phase'>
@@ -729,7 +729,7 @@
                 <example>
                     <title>Schema-level parameters</title>
                     <para>Validating a document against this schema:</para>
-                    <programlisting language="xml"><![CDATA[<sch:schema>]]>
+                    <programlisting language="xml"><![CDATA[<sch:schema schematronEdition='2025'>]]>
   <phrase role='highlight'><![CDATA[<sch:param name='myParam' value='"bar"'/>]]></phrase><![CDATA[
   <sch:pattern id='foo'>
     <sch:rule context='*'>
