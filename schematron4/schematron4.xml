@@ -230,7 +230,7 @@
                     <example>
                         <title><literal>severity</literal> attribute: dynamic evaluation</title>
                         <para>Schema:</para>
-                    <programlisting><![CDATA[<sch:schema schematronEdition='2025']]><phrase role="highlight">defaultPhase='phase'</phrase><![CDATA[>
+                    <programlisting><![CDATA[<sch:schema schematronEdition='2025' ]]><phrase role="highlight">defaultPhase='phase'</phrase><![CDATA[>
   <sch:ns prefix='a' uri='b'/>
   <sch:let name='c' value='d'/>
   <sch:phase id=']]><phrase role="highlight">phase</phrase><![CDATA['>
