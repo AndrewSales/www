@@ -150,6 +150,16 @@
             <title>Papers and Presentations</title>
             <itemizedlist>
                 <listitem>
+                    <para><emphasis><link xlink:href="slides/ISO%20Schematron%20update%20XML%20Prague%202026.pdf">ISO Schematron Standards Update</link></emphasis>, Schematron Users Meetup, XML Prague, 4th June 2026.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis><link xlink:href="slides/XQS%20XML%20Prague%202026.pdf">XQS Update</link></emphasis>, Schematron Users Meetup, XML Prague, 4th June 2026.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis><link xlink:href="slides/SVRL%202.0.pdf">SVRL 2.0</link></emphasis>, Schematron Users Meetup, XML Prague, 4th June 2026.</para>
+                </listitem>
+                
+                <listitem>
                     <para><emphasis><link xlink:href="slides/schematron%20users%20meetup%202025.pdf">ISO Schematron 2025 Standards Update</link></emphasis>, Schematron Users Meetup, Markup UK, London, 5th June 2025.</para>
                 </listitem>
                 <listitem>
