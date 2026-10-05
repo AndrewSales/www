@@ -50,7 +50,7 @@
         </section>
         <section>
             <title>Standards work</title>
-            <para>Andrew is a member in an individual capacity of British Standards committee <link
+            <para>Andrew is a member in an individual capacity and chair of British Standards committee <link
                 xlink:href="https://standardsdevelopment.bsigroup.com/committees/50053445"
                 >IST/41</link> (Document description and processing language), which represents the UK at meetings of ISO/IEC JTC 1/SC 34.<footnote>
                 <para>Which committee oversees standards including RELAX NG, Schematron, OOXML and EPUB.</para>
@@ -62,10 +62,10 @@
         <section>
             <title>Conferences</title>
             <para>Andrew has been a keen conference and SIG contributor since the days of SGML UK and XML Europe.</para>
-            <para>He has attended <link xlink:href="https://www.balisage.net/"
+            <para>He has presented at <link xlink:href="https://www.balisage.net/"
                 >Balisage</link> as well as <link xlink:href="https://xmllondon.com/"
                 >XML London</link> and <link xlink:href="https://www.xmlprague.cz/"
-                >XML Prague</link> (for both of which he has been a member of the peer-reviewing programme committee).</para>
+                >XML Prague</link> (for all of which he has been a member of the peer-reviewing programme committee).</para>
             <para>Together with Tony Graham, he has organized the annual Schematron Users Meetup at XML Prague since 2017.</para>
             <para>He is a founder member and organizer of <link xlink:href="https://markupuk.org/"
                 >Markup UK</link>, a conference about XML and other markup technologies.</para>
@@ -150,6 +150,9 @@
             <title>Papers and Presentations</title>
             <itemizedlist>
                 <listitem>
+                    <para><emphasis><link xlink:href="slides/balisage-2026/beyond%20valid%20and%20invalid.pdf">Beyond valid and invalid: implementing complex validation in XProc</link></emphasis>, Balisage: The Markup Conference, 5th August 2026, <link xlink:href="https://doi.org/10.4242/BalisageVol31.Sales01">https://doi.org/10.4242/BalisageVol31.Sales01</link>.</para>
+                </listitem>
+                <listitem>
                     <para><emphasis><link xlink:href="slides/ISO%20Schematron%20update%20XML%20Prague%202026.pdf">ISO Schematron Standards Update</link></emphasis>, Schematron Users Meetup, XML Prague, 4th June 2026.</para>
                 </listitem>
                 <listitem>
@@ -164,6 +167,9 @@
                 </listitem>
                 <listitem>
                     <para><emphasis><link xlink:href="https://www.youtube.com/embed/P_vnQa-H-0I">Content quality assurance in the era of AI</link></emphasis>, Annual Publishing Conference, London, 5th November 2024.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis><link xlink:href="slides/balisage-2024/ISO%20Schematron%20Update.pdf">ISO Schematron: Update on the Draft International Standard</link></emphasis>, Balisage: The Markup Conference, August 2024, <link xlink:href="https://doi.org/10.4242/BalisageVol29.Sales01">https://doi.org/10.4242/BalisageVol29.Sales01</link>.</para>
                 </listitem>
                 <listitem>
                     <para><emphasis><link xlink:href="slides/schematron%20users%20meetup%202024.pdf">ISO Schematron 2025 Standards Update</link></emphasis>, Schematron Users Meetup, XML Prague, 6th June 2024.</para>

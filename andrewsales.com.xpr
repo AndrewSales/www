@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <meta>
-        <filters directoryPatterns="" filePatterns="\Qmarkupuk2019.xpr\E" positiveFilePatterns="" showHiddenFiles="false"/>
+        <filters directoryPatterns="" filePatterns="\Qmarkupuk2019.xpr\E" positiveFilePatterns="" showHiddenFiles="true"/>
         <options>
             <serialized xml:space="preserve">
                 <serializableOrderedMap>
                     <entry>
                         <String>scenario.associations</String>
                         <scenarioAssociation-array>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>site.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>site</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>schematron4/schematron4.xml</String>
@@ -31,26 +51,6 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>../MarkupUK/build/sitemap.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>site</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioStorageLocations">
-                                    <list>
-                                        <Byte>2</Byte>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>site.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -100,26 +100,6 @@
                                 <field name="scenarioTypes">
                                     <list>
                                         <String>XQUERY</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioStorageLocations">
-                                    <list>
-                                        <Byte>2</Byte>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../schema/Untitled1.xspec</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>4/xspec-d8e9d6fd1eca26793a84bc77753a32593d5ad1b3/xspec.framework/XSpec/Run XSpec Test</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>ANT</String>
                                     </list>
                                 </field>
                                 <field name="scenarioStorageLocations">
@@ -2205,7 +2185,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/C:/Users/User/Documents/www/build.xsl</String>
+                                    <String>${pdu}/build.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
